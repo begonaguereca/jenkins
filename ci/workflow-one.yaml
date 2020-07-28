@@ -1,0 +1,36 @@
+---
+name: converted jenkins pipeline
+'on':
+- schedule:
+    cron: "* * * 30 *"
+- push:
+    branches:
+    - main
+    - release/*
+- pull-request: 
+env:
+- SHELL: "/bin/bash"
+  RUBY-VERSION: 2.7.1
+jobs:
+- name: build
+  runs-on: ubuntu-latest
+  steps:
+  - name: run command
+    run: echo foo
+  - name: nitpicker
+    uses: ethanis/nitpicker@v1
+    with:
+    - nitpicks: ".github/nitpicks.yml"
+      token: "${{ secrets.GITHUB_TOKEN }}"
+  - name: unknown builder
+    uses: hudson.plugins.copyartifact.CopyArtifact
+    unknown: true
+- name: release
+  runs-on: ubuntu-latest
+  needs:
+  - build
+  env:
+  - SERVER: production
+  steps:
+  - name: run command
+    run: echo $SERVER
