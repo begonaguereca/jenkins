@@ -1,0 +1,20 @@
+---
+name: converted jenkins pipeline
+'on':
+- schedule:
+    cron: "* * * 30 *"
+- push:
+    branches:
+    - main
+    - release/*
+- pull-request: 
+env:
+  '': 
+jobs:
+  name:
+  - release
+  - ubuntu-latest
+  - - build
+  - - SERVER: production
+  - - name: run command
+      run: echo $SERVER
