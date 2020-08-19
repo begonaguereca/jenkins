@@ -1,0 +1,33 @@
+name: jenkout-wysiwyg
+on:
+  schedule:
+  - cron: 15 13 * * *
+  push:
+    branches:
+    - main
+    - master
+    - new_branch
+  pull_request:
+    branches:
+    - master
+    - other_branch
+env:
+  secret-text-var-field-key: "${PARAM-Expression-Field}"
+  other-secret: "${Seccrett}"
+jobs:
+  build:
+    runs-on: jenkins-permanent-linux-agent
+    steps:
+    - name: run command
+      run: 'true'
+#    - uses: hudson.plugins.copyartifact.CopyArtifact
+#      with:
+#        plugin: copyartifact@1.45
+#        project: "/jenkout fake-repo/main"
+#        filter: output/env.txt
+#        target: 
+#        excludes: 
+#        selector:
+#          class: hudson.plugins.copyartifact.StatusBuildSelector
+#        doNotFingerprintArtifacts: 'false'
+    needs: []
