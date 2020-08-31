@@ -1,0 +1,15 @@
+name: jenkout-scripted-inline
+on:
+#  '': 
+env:
+#  '': 
+#  '': 
+jobs:
+  build:
+    runs-on: '{"type"=>"docker", "argument"=>{"isLiteral"=>true, "value"=>"maven:3-alpine"}}'
+    steps:
+#    - uses: 
+#      with: 
+#      uses: 
+#      with: 
+    needs: []
