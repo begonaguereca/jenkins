@@ -1,0 +1,16 @@
+name: jenkout-scripted-inline
+on:
+#  '': 
+#  '{"name"=>"cron", "arguments"=>[{"isLiteral"=>true, "value"=>"H */4 * * 1-5"}]}': 
+env:
+#  '': 
+#  '': 
+jobs:
+  build:
+    runs-on: '{"type"=>"docker", "argument"=>{"isLiteral"=>true, "value"=>"maven:3-alpine"}}'
+    steps:
+#    - uses: 
+#      with: 
+#      uses: 
+#      with: 
+    needs: []
