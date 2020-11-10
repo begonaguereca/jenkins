@@ -1,0 +1,21 @@
+name: freestyle-cougar
+on:
+  workflow_dispatch: 
+jobs:
+  build:
+    steps:
+#    - uses: hudson.plugins.copyartifact.CopyArtifact
+#      with:
+#        plugin: copyartifact@1.45.1
+#        project: Path/ToProject/freestyle raven
+#        parameters: param filters-field
+#        filter: path/to/artifact, path/two/other
+#        target: target directory-field
+#        excludes: artifact not-to-copy-field
+#        selector:
+#          class: hudson.plugins.copyartifact.SpecificBuildSelector
+#          buildNumber: commontrigger.${build_version_number}
+#        flatten: 'true'
+#        optional: 'true'
+#        doNotFingerprintArtifacts: 'false'
+#        resultVariableSuffix: RESULT_VAR_SUFFIX_FIELD
