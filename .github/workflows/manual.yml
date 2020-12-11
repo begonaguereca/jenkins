@@ -1,7 +1,15 @@
 name: converted jenkins pipeline
 on:
-  schedule:
-    - cron: "* * * 30 *"
+  workflow_dispatch:
+    inputs:
+      WORST_GAME_OF_THRONES_CHARECTER:
+        required: false
+        description: This is a description
+        default: jorah.mormont
+      sha1:
+        required: false
+        description: '"The git ref (branch, tag, commit) to build"'
+        default: develop
   push:
     branches:
     - main
