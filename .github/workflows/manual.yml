@@ -24,10 +24,9 @@ jobs:
         python -c "import sys; print(sys.version)"
     - name: run fourth python script
       continue-on-error: true
+      shell: python
       run: |
-        python <<HEREDOC
         import sys
         for p in sys.path:
           print(p)
-        HEREDOC
         
