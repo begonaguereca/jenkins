@@ -25,4 +25,8 @@ jobs:
       continue-on-error: true
       run: |
         python -c "import sys; print(sys.version)"
+    - name: run fourth python script
+      continue-on-error: true
+      run: |
+        python -c "collection = ['hey', 5, 'd']; for x in collection: print(x)"
         
