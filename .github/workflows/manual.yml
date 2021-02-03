@@ -15,12 +15,6 @@ jobs:
         echo shell
         ls -al
         pwd
-    - name: run second python script
-      continue-on-error: true
-      run: |
-        echo shell
-        ls -al
-        pwd
     - name: run third python script
       continue-on-error: true
       run: |
@@ -28,5 +22,7 @@ jobs:
     - name: run fourth python script
       continue-on-error: true
       run: |
-        python -c "collection = ['hey', 5, 'd']; for x in collection: print(x)"
+        python -c |
+        collection = ['hey', 5, 'd'] 
+        for x in collection: print(x)
         
