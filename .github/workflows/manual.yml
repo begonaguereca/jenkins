@@ -26,8 +26,8 @@ jobs:
       continue-on-error: true
       run: |
         python <<HEREDOC
-          import sys
-          for p in sys.path:
-            print(p)
-          HEREDOC
+        import sys
+        for p in sys.path:
+          print(p)
+        HEREDOC
         
