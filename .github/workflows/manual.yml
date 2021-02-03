@@ -10,6 +10,7 @@ jobs:
     - name: set up python
       uses: actions/setup-python@v2
     - name: run python script
+      continue-on-error: true
       run: |
         echo shell
         ls -al
