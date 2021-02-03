@@ -10,4 +10,8 @@ jobs:
     - name: set up python
       uses: actions/setup-python@v2
     - name: run python script
-      run: python -c "import sys; print(sys.version)"
+      run: |
+        echo shell
+        ls -al
+        pwd
+        
