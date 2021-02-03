@@ -9,10 +9,34 @@ jobs:
       uses: actions/checkout@v2
     - name: set up python
       uses: actions/setup-python@v2
-    - name: run python script
+    - name: run first python script
       continue-on-error: true
       run: |
         echo shell
         ls -al
         pwd
+    - name: run second python script
+      continue-on-error: true
+      run: |
+        echo shell
+        ls -al
+        pwd
+    - name: run third python script
+      continue-on-error: true
+      run: |
+        # set the midpoint
+        midpoint = 5
+
+        # make two empty lists
+        lower = []; upper = []
+
+        # split the numbers into lower and upper
+        for i in range(10):
+            if (i < midpoint):
+                lower.append(i)
+            else:
+                upper.append(i)
+
+        print("lower:", lower)
+        print("upper:", upper)
         
