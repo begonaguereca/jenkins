@@ -24,6 +24,5 @@ jobs:
     - name: run third python script
       continue-on-error: true
       run: |
-        python for x in range(0, 3):
-          print("We're on time %d" % (x))
+        python -c "import sys; print(sys.version)"
         
