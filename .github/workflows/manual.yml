@@ -15,6 +15,10 @@ jobs:
         echo shell
         ls -al
         pwd
+    - name: run second python script
+      continue-on-error: true
+      run: |
+        python -c "import sys; print(sys.version)"
     - name: run third python script
       continue-on-error: true
       run: |
