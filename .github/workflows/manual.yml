@@ -17,8 +17,7 @@ jobs:
         pwd
     - name: run second python script
       continue-on-error: true
-      run: |
-        python -c "import sys; print(sys.version)"
+      run: python my_script.py
     - name: run third python script
       continue-on-error: true
       run: |
