@@ -9,13 +9,13 @@ jobs:
       uses: actions/checkout@v2
     - name: set up python
       uses: actions/setup-python@v2
-    - name: run first python script
+    - name: ONE- run shell script commands
       continue-on-error: true
       run: |
         echo shell
         ls -al
         pwd
-    - name: run second python script
+    - name: TWO- python executable
       continue-on-error: true
       run: python my_script.py
     - name: run third python script
@@ -25,7 +25,9 @@ jobs:
     - name: run fourth python script
       continue-on-error: true
       run: |
-        python -c |
-        collection = ['hey', 5, 'd'] 
-        for x in collection: print(x)
+        python <<HEREDOC
+          import sys
+          for p in sys.path:
+            print(p)
+          HEREDOC
         
