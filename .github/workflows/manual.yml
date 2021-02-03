@@ -10,7 +10,4 @@ jobs:
     - name: set up python
       uses: actions/setup-python@v2
     - name: run python script
-      run: |-
-        pip install pytest
-        pip install pytest-cov
-        pytest tests.py --doctest-modules --junitxml=junit/test-results.xml --cov=com --cov-report=xml --cov-report=html
+      run: python -c "import sys; print(sys.version)"
