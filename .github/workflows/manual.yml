@@ -1,6 +1,6 @@
 name: begonaguereca/Python
 on:
-  push: 
+  workflow_dispatch:
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -9,24 +9,34 @@ jobs:
       uses: actions/checkout@v2
     - name: set up python
       uses: actions/setup-python@v2
-    - name: ONE- run shell script commands
+    - name: run python script
+      shell: python
+      run: |-
+        collection = ['hey', 5, 'd']
+        for x in collection:
+            print(x)
       continue-on-error: true
-      run: |
+    - name: set up python
+      uses: actions/setup-python@v2
+    - name: run python script
+      shell: bash
+      run: python my_script.py
+      continue-on-error: true
+    - name: set up python
+      uses: actions/setup-python@v2
+    - name: run python script
+      shell: bash
+      run: |-
         echo shell
         ls -al
         pwd
-    - name: TWO- python executable
-      continue-on-error: true
-      run: python my_script.py
-    - name: run third python script
-      continue-on-error: true
-      run: |
-        python -c "import sys; print(sys.version)"
-    - name: run fourth python script
-      continue-on-error: true
-      shell: python
-      run: |
-        import sys
-        for p in sys.path:
-          print(p)
-        
+    - name: set up python
+      uses: actions/setup-python@v2
+    # - Unsupported parameter 'XShell is not supported in Github Actions. Please ensure that the correct shell type is configured' with value 'xshell'
+    - name: run python script
+      shell: bash
+      run: |-
+        echo shell
+        ls -al
+        pwd
+
