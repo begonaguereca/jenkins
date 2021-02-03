@@ -1,17 +1,16 @@
-name: converted jenkins pipeline
+name: begonaguereca/Python
 on:
   workflow_dispatch:
-    inputs:
-      WORST_GAME_OF_THRONES_CHARECTER:
-        required: false
-        description: This is a description
-        default: jorah.mormont
-      sha1:
-        required: false
-        description: '"The git ref (branch, tag, commit) to build"'
-        default: develop
-  push:
-    branches:
-    - main
-    - release/*
-  pull_request: 
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - name: set up python
+      uses: actions/setup-python@v2
+    - name: run python script
+      run: |-
+        pip install pytest
+        pip install pytest-cov
+        pytest tests.py --doctest-modules --junitxml=junit/test-results.xml --cov=com --cov-report=xml --cov-report=html
