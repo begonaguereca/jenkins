@@ -24,6 +24,6 @@ jobs:
     - name: run third python script
       continue-on-error: true
       run: |
-        for x in range(0, 3):
+        python for x in range(0, 3):
           print("We're on time %d" % (x))
         
