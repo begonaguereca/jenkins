@@ -7,8 +7,6 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - name: set up python
-      uses: actions/setup-python@v2
     - name: run python script
       shell: python
       run: |-
@@ -16,22 +14,16 @@ jobs:
         for x in collection:
             print(x)
       continue-on-error: true
-    - name: set up python
-      uses: actions/setup-python@v2
     - name: run python script
       shell: bash
       run: python my_script.py
       continue-on-error: true
-    - name: set up python
-      uses: actions/setup-python@v2
     - name: run python script
       shell: bash
       run: |-
         echo shell
         ls -al
         pwd
-    - name: set up python
-      uses: actions/setup-python@v2
     # - Unsupported parameter 'XShell is not supported in Github Actions. Please ensure that the correct shell type is configured' with value 'xshell'
     - name: run python script
       shell: bash
