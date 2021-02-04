@@ -1,34 +1,44 @@
 name: begonaguereca/Python
 on:
-  push:
+  workflow_dispatch:
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
     - name: checkout
       uses: actions/checkout@v2
+#     # This item is not mapped to a GitHub Actions equivalent
+#     - uses: jenkins.plugins.shiningpanda.builders.PythonBuilder
+#       with:
+#         plugin: shiningpanda@0.24
+#         pythonName: '2.6'
+#         nature: python
+#         command: "print(\"regular python builder\")\n\nimport sys; \n\nprint(sys.version)"
+#         ignoreExitCode: 'false'
+    - name: set up python
+      uses: actions/setup-python@v2
     - name: run python script
       shell: python
       run: |-
-        collection = ['hey', 5, 'd']
-        for x in collection:
-            print(x)
+        print("regular python builder")
+        import sys
+        print(sys.version)
       continue-on-error: true
+    - name: set up python
+      uses: actions/setup-python@v2
     - name: run python script
-      shell: bash
-      run: python my_script.py
+      shell: python
+      run: |-
+        print("Virtual env- no clear")
+        print(sys.version)
       continue-on-error: true
+    - name: set up python
+      uses: actions/setup-python@v2
     - name: run python script
-      shell: bash
+      shell: python
       run: |-
-        echo shell
-        ls -al
-        pwd
-    # - Unsupported parameter 'XShell is not supported in Github Actions. Please ensure that the correct shell type is configured' with value 'xshell'
-    - name: run python script
-      shell: bash
-      run: |-
-        echo shell
-        ls -al
-        pwd
+        print("Virtual env- clear")
+        print(sys.version)
+      continue-on-error: true
+
 
