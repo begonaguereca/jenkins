@@ -27,7 +27,7 @@ jobs:
     - name: set up python
       uses: actions/setup-python@v2
       with:
-        python-version: Python3
+        python-version: 2.7
     - name: sh
       shell: bash
       run: python -m pip install pytest
