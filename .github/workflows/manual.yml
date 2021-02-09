@@ -1,45 +1,10 @@
-name: begonaguereca/post-jenkinsfile
-on:
-  push:
+name: Test
+
+on: [push]
+
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
     steps:
-    - name: checkout
-      uses: actions/checkout@v2
-    - name: echo message
-      run: echo ${"my branch is "+params.BRANCH_NAME}
-#     # This item is not mapped to a GitHub Actions equivalent
-#     - script:
-#       - key: scriptBlock
-#         value:
-#           isLiteral: true
-#           value: |-
-#             if( params.BRANCH_NAME == 'master' ){
-#                                     echo "mail list master"
-#                                 }
-#                                 else {
-#                                     echo "mail list others"
-#                                 }
-  Post-Build:
-    if: always()
-    name: Post Build
-    runs-on: ubuntu-latest
-    needs:
-    - test
-    steps:
-    - name: checkout
-      uses: actions/checkout@v2
-#     # This item is not mapped to a GitHub Actions equivalent
-#     - script:
-#       - key: scriptBlock
-#         value:
-#           isLiteral: true
-#           value: |-
-#             if( params.BRANCH_NAME == 'master' ){
-#                                 echo "mail list master"
-#                             }
-#                             else {
-#                                 echo "mail list others"
-#                             }
-#       if: always()
+    - uses: actions/checkout@v2
+    - uses: ouzi-dev/commit-status-updater@v1.1.0
