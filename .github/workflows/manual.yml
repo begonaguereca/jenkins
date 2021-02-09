@@ -10,14 +10,14 @@ jobs:
     - name: set up python
       uses: actions/setup-python@v2
       with:
-        python-version: python3
+        python-version: 2.7
     - name: sh
       shell: bash
       run: python setup.py install
     - name: set up python
       uses: actions/setup-python@v2
       with:
-        python-version: python3
+        python-version: 2.7
     - name: run python script
       shell: bash
       run: python setup.py install
