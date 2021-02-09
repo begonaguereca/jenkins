@@ -13,12 +13,12 @@ jobs:
         python-version: 2.7
     - name: sh
       shell: bash
-      run: python setup.py install
+      run: python my_script.py install
     - name: set up python
       uses: actions/setup-python@v2
       with:
         python-version: 2.7
     - name: run python script
       shell: bash
-      run: python setup.py install
+      run: python my_script.py install
       continue-on-error: true
