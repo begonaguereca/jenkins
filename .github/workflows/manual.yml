@@ -1,14 +1,16 @@
 name: Test
 
-on: [push]
+on: [pull_request]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - if: ${{ success() }}
-      uses: ouzi-dev/commit-status-updater@v1.1.0
+    - uses: ouzi-dev/commit-status-updater@v1.1.0
       with:
-        name: "what is it"
-        status: "error"  
+        status: "pending"
+        addHoldComment: "true"
+        pendingComment: "action pending!"
+        successComment: "action success!"
+        failComment: "action failed!"
