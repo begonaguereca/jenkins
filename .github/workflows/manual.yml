@@ -7,8 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-      with:
-        name: "cheecckk it out"
-    - uses: ouzi-dev/commit-status-updater@v1.1.0
+    - if: ${{ success() }}
+      uses: ouzi-dev/commit-status-updater@v1.1.0
       with:
         name: "what is it"
