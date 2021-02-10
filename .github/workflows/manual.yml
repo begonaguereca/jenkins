@@ -9,7 +9,6 @@ jobs:
     - uses: actions/checkout@v2
     - uses: ouzi-dev/commit-status-updater@v1.1.0
       with:
-        status: "pending"
         addHoldComment: "true"
         pendingComment: "action pending!"
         successComment: "action success!"
