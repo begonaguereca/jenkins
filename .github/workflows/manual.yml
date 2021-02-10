@@ -9,7 +9,7 @@ jobs:
     - uses: actions/checkout@v2
     - uses: ouzi-dev/commit-status-updater@v1.1.0
       with:
-        status: "error"
+        status: "${{ job.status }}"
         url: http://myurl.io/
         description: "this is my status check"
         name: "name of my status check"
