@@ -7,10 +7,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - if: "${{ job.status == 'success' }}"
-      uses: ouzi-dev/commit-status-updater@v1.1.0
-      with:
-        status: "error"
-        url: http://myurl.io/
-        description: "Sucess is not good enough"
-        name: "name of my status check"
+    - name: clean workspace
+      shell: bash
+      run: |-
+        #!/usr/bin/env ruby
+        require "fileutils"
+        Dir.chdir(ENV["GITHUB_WORKSPACE"]) do
+          paths = Dir.glob(["include/pattern"])
+          paths -= Dir.glob(["exclude/pattern/"])
+          paths.each do |path|
+            File.delete(path) if File.file?(path)
+            FileUtils.rm_rf(path) if File.directory?(path) # if deleteDirs == true
+          end
+        end
+      continue-on-error: true
+      if: always()
