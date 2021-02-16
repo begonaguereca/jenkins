@@ -8,7 +8,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: clean workspace
-      shell: bash
+      shell: ruby {0}
       run: |-
         require "fileutils"
         Dir.chdir(ENV["GITHUB_WORKSPACE"]) do
@@ -19,5 +19,3 @@ jobs:
             FileUtils.rm_rf(path) if File.directory?(path)
           end
         end
-      continue-on-error: true
-      if: always()
