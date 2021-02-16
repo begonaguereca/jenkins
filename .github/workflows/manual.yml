@@ -9,6 +9,16 @@ jobs:
     - uses: actions/checkout@v2
     - name: clean workspace
       shell: bash
-      run: rm -rf ${{ github.workspace }}
+      run: |-
+        #!/usr/bin/env ruby
+        require "fileutils"
+        Dir.chdir(ENV["GITHUB_WORKSPACE"]) do
+          paths = Dir.glob(["include/pattern"])
+          paths -= Dir.glob(["exclude/pattern/"])
+          paths.each do |path|
+            File.delete(path) if File.file?(path)
+            FileUtils.rm_rf(path) if File.directory?(path) # if deleteDirs == true
+          end
+        end
       continue-on-error: true
-      if: success()
+      if: always()
