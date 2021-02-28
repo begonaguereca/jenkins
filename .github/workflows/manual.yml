@@ -3,19 +3,24 @@ name: Test
 on: [push, pull_request]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: clean workspace
-      shell: ruby {0}
-      run: |-
-        require "fileutils"
-        Dir.chdir(ENV["GITHUB_WORKSPACE"]) do
-          paths = Dir.glob(["**/*.rb"])
-          paths -= Dir.glob(["**/*.ts"])
-          paths.each do |path|
-            File.delete(path) if File.file?(path)
-            FileUtils.rm_rf(path) if File.directory?(path)
-          end
-        end
+  build-debug-apk:
+    strategy:
+      fail-fast: false
+      matrix:
+        agp: [""]
+        kotlin: [""]
+        experimental: [false]
+        name: ["stable"]
+        include:
+          - agp: 4.2.+
+            experimental: true
+            name: AGP-4.2.+
+          - kotlin: 1.4.20+
+            experimental: true
+            name: kotlin-EAP-1.4.20+
+
+    continue-on-error: ${{ matrix.experimental }}
+    name: Build Debug APK - ${{ matrix.name }} - Experimental ${{ matrix.experimental }}
+    env:
+      VERSION_AGP: ${{ matrix.agp }}
+      VERSION_KOTLIN: ${{ matrix.kotlin }}
