@@ -24,3 +24,7 @@ jobs:
     env:
       VERSION_AGP: ${{ matrix.agp }}
       VERSION_KOTLIN: ${{ matrix.kotlin }}
+    steps:
+        - name: My first step
+        if: ${{ github.event_name == 'pull_request' && github.event.action == 'unassigned' }}
+        run: echo This event is a pull request that had an assignee removed.
