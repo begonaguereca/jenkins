@@ -1,0 +1,19 @@
+name: jenkout-testing/travis-ci-nodejs-example
+on:
+#   # This item has no matching transformer
+#   builds_only_with_travis_yml: false
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+#     # cache transformations are currently not supported
+#     # install transformations are currently not supported
+#     # script transformations are currently not supported
+    strategy:
+#       # 'strategy' transformations are currently unsupported
+#       - dependencies:
+#         - node_js:
+#           - node
+#           - lts/*
