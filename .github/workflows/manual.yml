@@ -10,5 +10,6 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - run: echo "hello world"
-      if: true
+      if: true == true
+      
     
