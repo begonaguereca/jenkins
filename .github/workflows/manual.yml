@@ -12,6 +12,6 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - run: echo "hello world"
-      if: "env.BOO == github.event_name"
+      if: contains([\"one\", \"main\"], github.ref)
       
     
