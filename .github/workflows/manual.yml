@@ -4,7 +4,7 @@ on:
     - master
 name: Push Event
 env: 
-  BOO: "winning"
+  BOO: "push"
 jobs:
   test:
     name: Run tests
