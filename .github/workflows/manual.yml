@@ -12,6 +12,6 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - run: echo "hello world"
-      if: contains(['one', 'main'], github.ref)
+      if: contains(fromJson(['one', 'main']), github.ref)
       
     
