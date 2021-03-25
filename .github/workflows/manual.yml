@@ -3,11 +3,11 @@ on:
     branches:
     - master
 env: 
- foo: "test"
+ FOO: "test"
 jobs:
   test_5:
     runs-on: ubuntu-latest
-    if: ${{ env.foo }}"
+    if: "${{ env.FOO }}"
     steps:
     - name: checkout
       uses: actions/checkout@v2
