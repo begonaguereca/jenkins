@@ -5,66 +5,6 @@ on:
 env: 
  foo: "test"
 jobs:
-  test:
-    runs-on: ${{ matrix.os }}
-    steps:
-    - name: checkout
-      uses: actions/checkout@v2
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: "${{ matrix.rvm }}"
-    - run: bundle install --jobs=3 --retry=3
-    - run: echo 'parent before_script'
-    - run: echo 'parent script'
-    strategy:
-      matrix:
-        ISOLATED:
-        - true
-        - false
-        rvm:
-        - 2.5
-        - 2.2
-        os:
-        - ubuntu-latest
-        - windows-latest
-    env:
-      ISOLATED: "${{ matrix.ISOLATED }}"
-  test_2:
-    runs-on: ubuntu-latest
-    if: ${{ true }}
-    steps:
-    - name: checkout
-      uses: actions/checkout@v2
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.5
-    - run: bundle install --jobs=3 --retry=3
-    - run: echo 'parent before_script'
-    - run: echo 'parent script'
-  test_3:
-    runs-on: ubuntu-latest
-    if: ${{ github.ref == 'refs/heads/master' }}
-    steps:
-    - name: checkout
-      uses: actions/checkout@v2
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.5
-    - run: bundle install --jobs=3 --retry=3
-    - run: echo 'parent before_script'
-    - run: echo 'parent script'
-  test_4:
-    runs-on: ubuntu-latest
-    if: ${{ github.ref != 'refs/heads/master' }}
-    steps:
-    - name: checkout
-      uses: actions/checkout@v2
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.5
-    - run: bundle install --jobs=3 --retry=3
-    - run: echo 'parent before_script'
-    - run: echo 'parent script'
   test_5:
     runs-on: ubuntu-latest
     if: ${{ env.foo }}"
