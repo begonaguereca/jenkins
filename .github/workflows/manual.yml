@@ -1,19 +1,18 @@
+
 on:
   push:
     branches:
     - master
+name: Push Event
 env: 
- FOO: "test"
+  BOO: UNICORN
+  UNICORN: 'real'
 jobs:
-  test_5:
+  test:
+    name: Run tests
     runs-on: ubuntu-latest
-    if: "${{ env.FOO }}"
     steps:
-    - name: checkout
-      uses: actions/checkout@v2
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.5
-    - run: bundle install --jobs=3 --retry=3
-    - run: echo 'parent before_script'
-    - run: echo 'parent script'
+    - uses: actions/checkout@master
+    - run: echo "hello world"
+      if: "${{ env.FOO }}" 
+
