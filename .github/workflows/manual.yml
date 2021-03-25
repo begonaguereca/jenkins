@@ -8,10 +8,10 @@ env:
   UNICORN: 'real'
 jobs:
   test:
+    if: "${{ env.BOO == 'ahhh' }}" 
     name: Run tests
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
     - run: echo "hello world"
-      if: "${{ env.BOO == 'ahhh' }}" 
 
