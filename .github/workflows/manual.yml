@@ -1,9 +1,8 @@
-
+name: Push Event
 on:
   push:
     branches:
     - master
-name: Push Event
 env: 
   BOO: 'ah'
   UNICORN: 'real'
