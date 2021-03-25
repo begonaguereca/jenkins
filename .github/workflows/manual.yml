@@ -5,6 +5,7 @@ on:
 name: Push Event
 env: 
   BOO: 'push'
+  UNICORN: 'real'
 jobs:
   test:
     name: Run tests
@@ -12,6 +13,6 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - run: echo "hello world"
-      if: env.BOO == 'push'
+      if: env.env.BOO == 'real'
       
     
