@@ -245,8 +245,6 @@ jobs:
     - run: echo 'parent script'
   test_20:
     runs-on: ubuntu-latest
-    if:
-#       # GitHub Actions does not support regex within the `If` condition
     steps:
     - name: checkout
       uses: actions/checkout@v2
