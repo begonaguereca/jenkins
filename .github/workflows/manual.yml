@@ -67,7 +67,7 @@ jobs:
     - run: echo 'parent script'
   test_5:
     runs-on: ubuntu-latest
-    if: ${{ env.foo }}
+    if: env.foo
     steps:
     - name: checkout
       uses: actions/checkout@v2
