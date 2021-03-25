@@ -12,6 +12,6 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - run: echo "hello world"
-      if: contains(fromJson('[\"one\", \"jenkins\"]'), github.event.repository.name)
+      if: env.env.BOO == "push"
       
     
