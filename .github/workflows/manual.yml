@@ -4,7 +4,7 @@ on:
     - master
 name: Push Event
 env: 
-  FOO: UNICORN
+  BOO: UNICORN
   UNICORN: 'real'
 jobs:
   test:
