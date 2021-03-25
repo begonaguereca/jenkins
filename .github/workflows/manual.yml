@@ -5,14 +5,14 @@ on:
     - master
 name: Push Event
 env: 
-  BOO: UNICORN
+  BOO: 'ah'
   UNICORN: 'real'
 jobs:
   test:
     name: Run tests
-    if: "${{ env.FOO }}" 
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
     - run: echo "hello world"
+      if: "${{ env.BOO == 'ah' }}" 
 
