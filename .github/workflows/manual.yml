@@ -13,6 +13,6 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - run: echo "hello world"
-      if: ${{ !github.ref == 'refs/heads/master' }} 
+      if: ${{ github.ref == 'refs/heads/master' }} 
       
     
