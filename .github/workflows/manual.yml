@@ -4,12 +4,15 @@ on:
     branches:
     - master
 name: Push Event
+env: 
+  BOO: UNICORN
+  UNICORN: 'real'
 jobs:
   test:
     name: Run tests
+    if: "${{ env.FOO }}" 
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
     - run: echo "hello world"
-      if: "${{ env.FOO }}" 
 
