@@ -4,9 +4,6 @@ on:
     branches:
     - master
 name: Push Event
-env: 
-  BOO: UNICORN
-  UNICORN: 'real'
 jobs:
   test:
     name: Run tests
