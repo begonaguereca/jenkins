@@ -4,7 +4,7 @@ on:
     - master
 name: Push Event
 env: 
-  BOO: UNICORN
+  FOO: UNICORN
   UNICORN: 'real'
 jobs:
   test:
@@ -13,6 +13,6 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - run: echo "hello world"
-      if: ${{ github.ref == 'refs/heads/master' }} 
+      if: "${{ env.FOO !== true }}" 
       
     
