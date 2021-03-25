@@ -13,6 +13,6 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - run: echo "hello world"
-      if: env.${{ env.BOO }} == 'real'
+      if: ${{ env.env.BOO }} == 'real'
       
     
