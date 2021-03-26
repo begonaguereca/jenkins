@@ -6,8 +6,8 @@ on:
 jobs:
   test_2:
     services:
-      neo4j:
-        image: neo4j
+      rabbitmq:
+        image: rabbitmq
     
     runs-on: ubuntu-latest
     env: 
