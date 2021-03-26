@@ -287,7 +287,7 @@ jobs:
       if: "${{ env.FOO == github.event_name }}"
   test_18:
     runs-on: ubuntu-latest
-    if: ${{ fromJson(join([foo, -, bar] ",")) == 'foo-bar' }}
+    if: ${{ join(fromJson([foo, -, bar])) == 'foo-bar' }}
     steps:
     - name: checkout
       uses: actions/checkout@v2
