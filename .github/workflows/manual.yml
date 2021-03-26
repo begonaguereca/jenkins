@@ -6,8 +6,8 @@ on:
 jobs:
   test_2:
     services:
-      couchdb:
-        image: couchdb
+      memcached:
+        image: memcached
     
     runs-on: ubuntu-latest
     env: 
