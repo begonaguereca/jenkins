@@ -6,8 +6,8 @@ on:
 jobs:
   test_2:
     services:
-      memcached:
-        image: memcached
+      neo4j:
+        image: neo4j
     
     runs-on: ubuntu-latest
     env: 
