@@ -4,14 +4,463 @@ on:
     branches:
     - master
 jobs:
-  test_2:
-    services:
-      postgres:
-        image: postgres
-    
-    runs-on: ubuntu-latest
-    env: 
-      foo: "bar"
+  test:
+    name: test
+    runs-on: ${{ matrix.os }}
     steps:
     - name: checkout
       uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: "${{ matrix.rvm }}"
+    - run: bundle install --jobs=3 --retry=3
+    - run: echo 'parent before_script'
+    - run: echo 'parent script'
+    strategy:
+      matrix:
+        ISOLATED:
+        - true
+        - false
+        rvm:
+        - 2.5
+        - 2.2
+        os:
+        - ubuntu-latest
+        - windows-latest
+    env:
+      ISOLATED: "${{ matrix.ISOLATED }}"
+  conditional_test_1:
+    name: conditional_test_1
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.5
+    - run: bundle install --jobs=3 --retry=3
+    - run: echo 'parent before_script'
+    - run: echo 'parent script'
+  conditional_test_2:
+    name: conditional_test_2
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.5
+    - run: bundle install --jobs=3 --retry=3
+    - run: echo 'parent before_script'
+    - run: echo 'parent script'
+  conditional_test_3:
+    name: conditional_test_3
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.5
+    - run: bundle install --jobs=3 --retry=3
+    - run: echo 'parent before_script'
+    - run: echo 'parent script'
+  conditional_test_4:
+    name: conditional_test_4
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.5
+    - run: bundle install --jobs=3 --retry=3
+    - run: echo 'parent before_script'
+    - run: echo 'parent script'
+  conditional_test_5:
+    name: conditional_test_5
+    runs-on: ubuntu-latest
+ 
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.5
+    - run: bundle install --jobs=3 --retry=3
+    - run: echo 'parent before_script'
+    - run: echo 'parent script'
+  conditional_test_6:
+    name: conditional_test_6
+    runs-on: ubuntu-latest
+ 
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.5
+    - run: bundle install --jobs=3 --retry=3
+    - run: echo 'parent before_script'
+    - run: echo 'parent script'
+  conditional_test_7:
+    name: conditional_test_7
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.5
+    - run: bundle install --jobs=3 --retry=3
+    - run: echo 'parent before_script'
+    - run: echo 'parent script'
+  conditional_test_8:
+    name: conditional_test_8
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.5
+    - run: bundle install --jobs=3 --retry=3
+    - run: echo 'parent before_script'
+    - run: echo 'parent script'
+  conditional_test_9:
+    name: conditional_test_9
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.5
+    - run: bundle install --jobs=3 --retry=3
+    - run: echo 'parent before_script'
+    - run: echo 'parent script'
+  conditional_test_10:
+    name: conditional_test_10
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.5
+    - run: bundle install --jobs=3 --retry=3
+    - run: echo 'parent before_script'
+    - run: echo 'parent script'
+  conditional_test_11:
+    name: conditional_test_11
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.5
+    - run: bundle install --jobs=3 --retry=3
+    - run: echo 'parent before_script'
+    - run: echo 'parent script'
+  conditional_test_12:
+    name: conditional_test_12
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.5
+    - run: bundle install --jobs=3 --retry=3
+    - run: echo 'parent before_script'
+    - run: echo 'parent script'
+  conditional_test_13:
+    name: conditional_test_13
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.5
+    - run: bundle install --jobs=3 --retry=3
+    - run: echo 'parent before_script'
+    - run: echo 'parent script'
+  conditional_test_14:
+    name: conditional_test_14
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.5
+    - run: bundle install --jobs=3 --retry=3
+    - run: echo 'parent before_script'
+    - run: echo 'parent script'
+  conditional_test_15:
+    name: conditional_test_15
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.5
+    - run: bundle install --jobs=3 --retry=3
+    - run: echo 'parent before_script'
+    - run: echo 'parent script'
+  conditional_test_16:
+    name: conditional_test_16
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.5
+    - run: bundle install --jobs=3 --retry=3
+    - run: echo 'parent before_script'
+    - run: echo 'parent script'
+  conditional_test_17:
+    name: conditional_test_17
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.5
+    - run: bundle install --jobs=3 --retry=3
+    - run: echo 'parent before_script'
+    - run: echo 'parent script'
+  conditional_test_18:
+    name: conditional_test_18
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.5
+    - run: bundle install --jobs=3 --retry=3
+    - run: echo 'parent before_script'
+    - run: echo 'parent script'
+  conditional_test_19:
+    name: conditional_test_19
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.5
+    - run: bundle install --jobs=3 --retry=3
+    - run: echo 'parent before_script'
+    - run: echo 'parent script'
+  conditional_test_20:
+    name: conditional_test_20
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.5
+    - run: bundle install --jobs=3 --retry=3
+    - run: echo 'parent before_script'
+    - run: echo 'parent script'
+  conditional_test_21:
+    name: conditional_test_21
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.5
+    - run: bundle install --jobs=3 --retry=3
+    - run: echo 'parent before_script'
+    - run: echo 'parent script'
+  conditional_test_22:
+    name: conditional_test_22
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.5
+    - run: bundle install --jobs=3 --retry=3
+    - run: echo 'parent before_script'
+    - run: echo 'parent script'
+  conditional_test_23:
+    name: conditional_test_23
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.5
+    - run: bundle install --jobs=3 --retry=3
+    - run: echo 'parent before_script'
+    - run: echo 'parent script'
+  conditional_test_24:
+    name: conditional_test_24
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.5
+    - run: bundle install --jobs=3 --retry=3
+    - run: echo 'parent before_script'
+    - run: echo 'parent script'
+  conditional_test_25:
+    name: conditional_test_25
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.5
+    - run: bundle install --jobs=3 --retry=3
+    - run: echo 'parent before_script'
+    - run: echo 'parent script'
+  conditional_test_26:
+    name: conditional_test_26
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.5
+    - run: bundle install --jobs=3 --retry=3
+    - run: echo 'parent before_script'
+    - run: echo 'parent script'
+  conditional_test_27:
+    name: conditional_test_27
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.5
+    - run: bundle install --jobs=3 --retry=3
+    - run: echo 'parent before_script'
+    - run: echo 'parent script'
+  build:
+    name: build
+    needs:
+    - test
+    - conditional_test_1
+    - conditional_test_2
+    - conditional_test_3
+    - conditional_test_4
+    - conditional_test_5
+    - conditional_test_6
+    - conditional_test_7
+    - conditional_test_8
+    - conditional_test_9
+    - conditional_test_10
+    - conditional_test_11
+    - conditional_test_12
+    - conditional_test_13
+    - conditional_test_14
+    - conditional_test_15
+    - conditional_test_16
+    - conditional_test_17
+    - conditional_test_18
+    - conditional_test_19
+    - conditional_test_20
+    - conditional_test_21
+    - conditional_test_22
+    - conditional_test_23
+    - conditional_test_24
+    - conditional_test_25
+    - conditional_test_26
+    - conditional_test_27
+    runs-on: ubuntu-latest
+    env:
+      ISOLATED: true
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.5
+    - run: bundle install --jobs=3 --retry=3
+    - run: echo 'parent before_script'
+    - run: echo "child build"
+  deploy:
+    name: deploy
+    needs:
+    - test
+    - conditional_test_1
+    - conditional_test_2
+    - conditional_test_3
+    - conditional_test_4
+    - conditional_test_5
+    - conditional_test_6
+    - conditional_test_7
+    - conditional_test_8
+    - conditional_test_9
+    - conditional_test_10
+    - conditional_test_11
+    - conditional_test_12
+    - conditional_test_13
+    - conditional_test_14
+    - conditional_test_15
+    - conditional_test_16
+    - conditional_test_17
+    - conditional_test_18
+    - conditional_test_19
+    - conditional_test_20
+    - conditional_test_21
+    - conditional_test_22
+    - conditional_test_23
+    - conditional_test_24
+    - conditional_test_25
+    - conditional_test_26
+    - conditional_test_27
+    - build
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.5
+    - run: bundle install --jobs=3 --retry=3
+    - run: echo 'parent before_script'
+    - run: echo "child deploy"
+#     # deploy transformations are currently not supported
