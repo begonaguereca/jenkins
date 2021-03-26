@@ -30,7 +30,8 @@ jobs:
       ISOLATED: "${{ matrix.ISOLATED }}"
   test_2:
     runs-on: ubuntu-latest
-    if: "${{ !!env.foo }}"
+    env: 
+      foo: "bar"
     steps:
     - name: checkout
       uses: actions/checkout@v2
@@ -39,5 +40,6 @@ jobs:
         ruby-version: 2.5
     - run: bundle install --jobs=3 --retry=3
     - run: echo 'parent before_script'
+      if: "${{ !!env.foo }}"
     - run: echo 'parent script'
   
