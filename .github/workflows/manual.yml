@@ -6,12 +6,8 @@ on:
 jobs:
   test_2:
     services:
-      postgresql:
-        image: postgres
-      mongodb:
-        image: mongo
-      cassandra:
-        image: cassandra
+      elasticsearch:
+        image: elasticsearch
     
     runs-on: ubuntu-latest
     env: 
