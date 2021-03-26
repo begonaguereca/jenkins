@@ -6,8 +6,8 @@ on:
 jobs:
   test_2:
     services:
-      elasticsearch:
-        image: elasticsearch
+      couchdb:
+        image: couchdb
     
     runs-on: ubuntu-latest
     env: 
