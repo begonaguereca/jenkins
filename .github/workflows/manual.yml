@@ -15,5 +15,5 @@ jobs:
       with:
         ruby-version: 2.5
     - run: echo 'parent before_script'
-      if: "${{ !!env.foo }}"
+      if: ${{ !!env.foo }}
   
