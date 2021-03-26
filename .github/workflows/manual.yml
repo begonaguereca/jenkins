@@ -5,15 +5,17 @@ on:
     - master
 jobs:
   test_2:
+    services:
+      postgresql:
+        image: postgres
+      mongodb:
+        image: mongo
+      cassandra:
+        image: cassandra
+    
     runs-on: ubuntu-latest
     env: 
       foo: "bar"
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.5
-    - run: echo 'parent before_script'
-      if: ${{ !!env.foo }}
-  
