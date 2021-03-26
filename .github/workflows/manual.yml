@@ -66,7 +66,7 @@ jobs:
     - run: echo 'parent script'
   test_5:
     runs-on: ubuntu-latest
-    if: 'bioo'
+    
     steps:
     - name: checkout
       uses: actions/checkout@v2
@@ -83,7 +83,7 @@ jobs:
       if: "${{ env.foo }}"
   test_6:
     runs-on: ubuntu-latest
-    if: 'bioo'
+    
     steps:
     - name: checkout
       uses: actions/checkout@v2
@@ -100,7 +100,7 @@ jobs:
       if: "${{ !env.foo }}"
   test_7:
     runs-on: ubuntu-latest
-    if: 'bioo'
+    
     steps:
     - name: checkout
       uses: actions/checkout@v2
@@ -117,7 +117,7 @@ jobs:
       if: "${{ !env.foo }}"
   test_8:
     runs-on: ubuntu-latest
-    if: 'bioo'
+    
     steps:
     - name: checkout
       uses: actions/checkout@v2
@@ -134,7 +134,7 @@ jobs:
       if: "${{ !env.foo }}"
   test_9:
     runs-on: ubuntu-latest
-    if: 'bioo'
+    
     steps:
     - name: checkout
       uses: actions/checkout@v2
@@ -151,7 +151,7 @@ jobs:
       if: "${{ env.foo }}"
   test_10:
     runs-on: ubuntu-latest
-    if: 'bioo'
+    
     steps:
     - name: checkout
       uses: actions/checkout@v2
@@ -168,7 +168,7 @@ jobs:
       if: "${{ !!env.foo }}"
   test_11:
     runs-on: ubuntu-latest
-    if: 'bioo'
+    
     steps:
     - name: checkout
       uses: actions/checkout@v2
@@ -185,7 +185,7 @@ jobs:
       if: "${{ env.foo }}"
   test_12:
     runs-on: ubuntu-latest
-    if: 'bioo'
+    
     steps:
     - name: checkout
       uses: actions/checkout@v2
@@ -202,7 +202,7 @@ jobs:
       if: "${{ !env.foo }}"
   test_13:
     runs-on: ubuntu-latest
-    if: 'bioo'
+    
     steps:
     - name: checkout
       uses: actions/checkout@v2
@@ -219,7 +219,7 @@ jobs:
       if: "${{ !env.foo }}"
   test_14:
     runs-on: ubuntu-latest
-    if: 'bioo'
+    
     steps:
     - name: checkout
       uses: actions/checkout@v2
@@ -236,7 +236,7 @@ jobs:
       if: "${{ !env.foo }}"
   test_15:
     runs-on: ubuntu-latest
-    if: 'bioo'
+    
     steps:
     - name: checkout
       uses: actions/checkout@v2
@@ -253,7 +253,7 @@ jobs:
       if: "${{ env.foo }}"
   test_16:
     runs-on: ubuntu-latest
-    if: 'bioo'
+    
     steps:
     - name: checkout
       uses: actions/checkout@v2
@@ -270,7 +270,7 @@ jobs:
       if: "${{ !!env.foo }}"
   test_17:
     runs-on: ubuntu-latest
-    if: 'bioo'
+    
     steps:
     - name: checkout
       uses: actions/checkout@v2
@@ -299,7 +299,7 @@ jobs:
     - run: echo 'parent script'
   test_19:
     runs-on: ubuntu-latest
-    if: 'bioo'
+    
     steps:
     - name: checkout
       uses: actions/checkout@v2
@@ -353,7 +353,7 @@ jobs:
     - run: echo 'parent script'
   test_23:
     runs-on: ubuntu-latest
-    if: 'bioo'
+    
     steps:
     - name: checkout
       uses: actions/checkout@v2
