@@ -6,8 +6,8 @@ on:
 jobs:
   test_2:
     services:
-      rabbitmq:
-        image: rabbitmq
+      postgres:
+        image: postgres
     
     runs-on: ubuntu-latest
     env: 
