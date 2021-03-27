@@ -16,10 +16,9 @@ jobs:
     - name: checkout
       uses: actions/checkout@v2
 #     # 'os' dependencies are currently unsupported
-    - uses: ruby/setup-ruby@v1
+    - uses: actions/setup-node@v2
       with:
-        ruby-version: "${{ matrix.rvm }}"
-    - run: bundle install --jobs=3 --retry=3
+        node-version: "${{ matrix.node_js }}"
     - run: echo 'parent before_script'
     - run: echo 'parent script'
     strategy:
@@ -30,9 +29,6 @@ jobs:
         ISOLATED:
         - true
         - false
-        rvm:
-        - 2.5
-        - 2.2
         os:
         - ubuntu-latest
         - windows-latest
@@ -40,7 +36,7 @@ jobs:
         - FOO: bar
           BAR: foo
         exclude:
-        - rvm: 2.2
+        - node_js: 2.2
           os: linux
     env:
       FOO: "${{ matrix.FOO }}"
@@ -52,11 +48,7 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.5
     - run: echo 'before install is working'
-    - run: bundle install --jobs=3 --retry=3
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_3:
@@ -64,9 +56,6 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.5
     - run: echo 'install is working'
     - run: echo 'parent before_script'
     - run: echo 'parent script'
@@ -75,10 +64,6 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.5
-    - run: bundle install --jobs=3 --retry=3
     - run: echo 'before script is working'
     - run: echo 'parent script'
   test_5:
@@ -86,10 +71,6 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.5
-    - run: bundle install --jobs=3 --retry=3
     - run: echo 'parent before_script'
     - run: echo 'script is working'
   test_6:
@@ -97,10 +78,6 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.5
-    - run: bundle install --jobs=3 --retry=3
     - run: echo 'parent before_script'
     - run: echo 'parent script'
     - run: echo 'after_script is working'
@@ -110,10 +87,6 @@ jobs:
     - name: checkout
       uses: actions/checkout@v2
     - run: echo 'before cache is working'
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.5
-    - run: bundle install --jobs=3 --retry=3
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_8:
@@ -121,10 +94,6 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.5
-    - run: bundle install --jobs=3 --retry=3
     - run: echo 'parent before_script'
     - run: echo 'parent script'
     - run: echo 'after failure is working'
@@ -133,10 +102,6 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.5
-    - run: bundle install --jobs=3 --retry=3
     - run: echo 'parent before_script'
     - run: echo 'parent script'
     - run: echo 'after success is working'
@@ -145,10 +110,6 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.5
-    - run: bundle install --jobs=3 --retry=3
     - run: echo 'parent before_script'
     - run: echo 'parent script'
     - run: echo 'before deploy is working'
@@ -157,10 +118,6 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.5
-    - run: bundle install --jobs=3 --retry=3
     - run: echo 'parent before_script'
     - run: echo 'parent script'
     - run: echo 'after deploy is working'
@@ -169,32 +126,22 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.5
-    - run: bundle install --jobs=3 --retry=3
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_13:
     runs-on: ubuntu-latest
+
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.5
-    - run: bundle install --jobs=3 --retry=3
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_14:
     runs-on: ubuntu-latest
+
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.5
-    - run: bundle install --jobs=3 --retry=3
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_15:
@@ -203,10 +150,6 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.5
-    - run: bundle install --jobs=3 --retry=3
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_16:
@@ -215,10 +158,6 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.5
-    - run: bundle install --jobs=3 --retry=3
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_17:
@@ -227,23 +166,14 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.5
-    - run: bundle install --jobs=3 --retry=3
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_18:
     runs-on: ubuntu-latest
-    if:
-#       # 'if' transformations are currently unsupported: [env(foo) IS blank]
+
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.5
-    - run: bundle install --jobs=3 --retry=3
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_19:
@@ -252,10 +182,6 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.5
-    - run: bundle install --jobs=3 --retry=3
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_20:
@@ -264,10 +190,6 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.5
-    - run: bundle install --jobs=3 --retry=3
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_21:
@@ -276,10 +198,6 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.5
-    - run: bundle install --jobs=3 --retry=3
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_22:
@@ -288,10 +206,6 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.5
-    - run: bundle install --jobs=3 --retry=3
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_23:
@@ -300,10 +214,6 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.5
-    - run: bundle install --jobs=3 --retry=3
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_24:
@@ -312,22 +222,14 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.5
-    - run: bundle install --jobs=3 --retry=3
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_25:
     runs-on: ubuntu-latest
- 
+
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.5
-    - run: bundle install --jobs=3 --retry=3
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_26:
@@ -336,10 +238,6 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.5
-    - run: bundle install --jobs=3 --retry=3
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_27:
@@ -348,10 +246,6 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.5
-    - run: bundle install --jobs=3 --retry=3
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_28:
@@ -360,10 +254,6 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.5
-    - run: bundle install --jobs=3 --retry=3
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_29:
@@ -372,67 +262,46 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.5
-    - run: bundle install --jobs=3 --retry=3
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_30:
     runs-on: ubuntu-latest
-
+]
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.5
-    - run: bundle install --jobs=3 --retry=3
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_31:
     runs-on: ubuntu-latest
+
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.5
-    - run: bundle install --jobs=3 --retry=3
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_32:
+    runs-on: ubuntu-latest
+  
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - run: echo 'parent before_script'
+    - run: echo 'parent script'
+  test_33:
     runs-on: ubuntu-latest
 
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.5
-    - run: bundle install --jobs=3 --retry=3
-    - run: echo 'parent before_script'
-    - run: echo 'parent script'
-  test_33:
-    runs-on: ubuntu-latest
-    steps:
-    - name: checkout
-      uses: actions/checkout@v2
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.5
-    - run: bundle install --jobs=3 --retry=3
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_34:
     runs-on: ubuntu-latest
+
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.5
-    - run: bundle install --jobs=3 --retry=3
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_35:
@@ -441,43 +310,30 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.5
-    - run: bundle install --jobs=3 --retry=3
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_36:
     runs-on: ubuntu-latest
+
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.5
-    - run: bundle install --jobs=3 --retry=3
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_37:
     runs-on: ubuntu-latest
+
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.5
-    - run: bundle install --jobs=3 --retry=3
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_38:
     runs-on: ubuntu-latest
+
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.5
-    - run: bundle install --jobs=3 --retry=3
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   build:
@@ -526,10 +382,6 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.5
-    - run: bundle install --jobs=3 --retry=3
     - run: echo 'parent before_script'
     - run: echo "child build"
   deploy:
@@ -577,10 +429,6 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.5
-    - run: bundle install --jobs=3 --retry=3
     - run: echo 'parent before_script'
     - run: echo "child deploy"
 #     # deploy transformations are currently not supported
