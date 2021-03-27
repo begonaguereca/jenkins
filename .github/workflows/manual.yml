@@ -9,12 +9,12 @@ env:
   TIMEOUT: '1000'
 jobs:
   test:
-    runs-on: ${{ matrix.os }}
     env:
       FOO: "${{ matrix.FOO }}"
       BAR: "${{ matrix.BAR }}"
       USE_NETWORK: "${{ matrix.USE_NETWORK }}"
       ISOLATED: "${{ matrix.ISOLATED }}"
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         USE_NETWORK:
@@ -23,12 +23,12 @@ jobs:
         ISOLATED:
         - true
         - false
+        node_js:
+        - 2.5
+        - 2.2
         os:
         - ubuntu-latest
         - windows-latest
-        node_js:
-         - 2.2
-         - 3.0
         include:
         - FOO: bar
           BAR: foo
@@ -42,6 +42,7 @@ jobs:
     - uses: actions/setup-node@v2
       with:
         node-version: "${{ matrix.node_js }}"
+    - run: npm install
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_2:
@@ -49,7 +50,11 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 2.5
     - run: echo 'before install is working'
+    - run: npm install
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_3:
@@ -57,6 +62,9 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 2.5
     - run: echo 'install is working'
     - run: echo 'parent before_script'
     - run: echo 'parent script'
@@ -65,6 +73,10 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 2.5
+    - run: npm install
     - run: echo 'before script is working'
     - run: echo 'parent script'
   test_5:
@@ -72,6 +84,10 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 2.5
+    - run: npm install
     - run: echo 'parent before_script'
     - run: echo 'script is working'
   test_6:
@@ -79,6 +95,10 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 2.5
+    - run: npm install
     - run: echo 'parent before_script'
     - run: echo 'parent script'
     - run: echo 'after_script is working'
@@ -88,6 +108,10 @@ jobs:
     - name: checkout
       uses: actions/checkout@v2
     - run: echo 'before cache is working'
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 2.5
+    - run: npm install
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_8:
@@ -95,6 +119,10 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 2.5
+    - run: npm install
     - run: echo 'parent before_script'
     - run: echo 'parent script'
     - run: echo 'after failure is working'
@@ -103,6 +131,10 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 2.5
+    - run: npm install
     - run: echo 'parent before_script'
     - run: echo 'parent script'
     - run: echo 'after success is working'
@@ -111,6 +143,10 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 2.5
+    - run: npm install
     - run: echo 'parent before_script'
     - run: echo 'parent script'
     - run: echo 'before deploy is working'
@@ -119,221 +155,362 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 2.5
+    - run: npm install
     - run: echo 'parent before_script'
     - run: echo 'parent script'
     - run: echo 'after deploy is working'
   test_12:
     runs-on: ubuntu-latest
+    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+#       # 'if' transformations are currently unsupported: [true]
     steps:
     - name: checkout
       uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 2.5
+    - run: npm install
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_13:
     runs-on: ubuntu-latest
-
+    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+#       # 'if' transformations are currently unsupported: [branch = master]
     steps:
     - name: checkout
       uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 2.5
+    - run: npm install
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_14:
     runs-on: ubuntu-latest
-
+    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+#       # 'if' transformations are currently unsupported: [branch != master]
     steps:
     - name: checkout
       uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 2.5
+    - run: npm install
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_15:
     runs-on: ubuntu-latest
-
+    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+#       # 'if' transformations are currently unsupported: [env(foo) IS present]
     steps:
     - name: checkout
       uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 2.5
+    - run: npm install
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_16:
     runs-on: ubuntu-latest
-
+    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+#       # 'if' transformations are currently unsupported: [env(foo) IS NOT present]
     steps:
     - name: checkout
       uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 2.5
+    - run: npm install
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_17:
     runs-on: ubuntu-latest
-
+    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+#       # 'if' transformations are currently unsupported: [NOT env(foo) IS present]
     steps:
     - name: checkout
       uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 2.5
+    - run: npm install
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_18:
     runs-on: ubuntu-latest
-
+    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+#       # 'if' transformations are currently unsupported: [env(foo) IS blank]
     steps:
     - name: checkout
       uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 2.5
+    - run: npm install
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_19:
     runs-on: ubuntu-latest
-
+    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+#       # 'if' transformations are currently unsupported: [env(foo) IS NOT blank]
     steps:
     - name: checkout
       uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 2.5
+    - run: npm install
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_20:
     runs-on: ubuntu-latest
-
+    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+#       # 'if' transformations are currently unsupported: [NOT env(foo) IS blank]
     steps:
     - name: checkout
       uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 2.5
+    - run: npm install
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_21:
     runs-on: ubuntu-latest
-
+    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+#       # 'if' transformations are currently unsupported: [env(foo) IS true]
     steps:
     - name: checkout
       uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 2.5
+    - run: npm install
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_22:
     runs-on: ubuntu-latest
-
+    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+#       # 'if' transformations are currently unsupported: [env(foo) IS NOT true]
     steps:
     - name: checkout
       uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 2.5
+    - run: npm install
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_23:
     runs-on: ubuntu-latest
-
+    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+#       # 'if' transformations are currently unsupported: [NOT env(foo) IS true]
     steps:
     - name: checkout
       uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 2.5
+    - run: npm install
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_24:
     runs-on: ubuntu-latest
-
+    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+#       # 'if' transformations are currently unsupported: [env(foo) IS false]
     steps:
     - name: checkout
       uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 2.5
+    - run: npm install
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_25:
     runs-on: ubuntu-latest
-
+    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+#       # 'if' transformations are currently unsupported: [env(foo) IS NOT false]
     steps:
     - name: checkout
       uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 2.5
+    - run: npm install
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_26:
     runs-on: ubuntu-latest
-
+    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+#       # 'if' transformations are currently unsupported: [NOT env(foo) IS false]
     steps:
     - name: checkout
       uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 2.5
+    - run: npm install
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_27:
     runs-on: ubuntu-latest
-
+    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+#       # 'if' transformations are currently unsupported: [env(FOO) = type]
     steps:
     - name: checkout
       uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 2.5
+    - run: npm install
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_28:
     runs-on: ubuntu-latest
-
+    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+#       # 'if' transformations are currently unsupported: [concat("foo", "-", "bar") = "foo-bar"]
     steps:
     - name: checkout
       uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 2.5
+    - run: npm install
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_29:
     runs-on: ubuntu-latest
-
+    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+#       # 'if' transformations are currently unsupported: [env(FOO) = env(BAR)]
     steps:
     - name: checkout
       uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 2.5
+    - run: npm install
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_30:
     runs-on: ubuntu-latest
+    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+#       # 'if' transformations are currently unsupported: [branch =~ /^(one|two)-three$/]
     steps:
     - name: checkout
       uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 2.5
+    - run: npm install
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_31:
     runs-on: ubuntu-latest
-
+    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+#       # 'if' transformations are currently unsupported: [branch IN (one, other)]
     steps:
     - name: checkout
       uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 2.5
+    - run: npm install
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_32:
     runs-on: ubuntu-latest
-  
+    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+#       # 'if' transformations are currently unsupported: [repo IN (env(ONE), env(OTHER))]
     steps:
     - name: checkout
       uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 2.5
+    - run: npm install
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_33:
     runs-on: ubuntu-latest
-
+    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+#       # 'if' transformations are currently unsupported: [env(env(FOO))]
     steps:
     - name: checkout
       uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 2.5
+    - run: npm install
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_34:
     runs-on: ubuntu-latest
-
+    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+#       # 'if' transformations are currently unsupported: [branch = master AND type = cron]
     steps:
     - name: checkout
       uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 2.5
+    - run: npm install
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_35:
     runs-on: ubuntu-latest
-
+    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+#       # 'if' transformations are currently unsupported: [type = cron OR tag = bar]
     steps:
     - name: checkout
       uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 2.5
+    - run: npm install
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_36:
     runs-on: ubuntu-latest
-
+    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+#       # 'if' transformations are currently unsupported: [NOT branch = master]
     steps:
     - name: checkout
       uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 2.5
+    - run: npm install
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_37:
     runs-on: ubuntu-latest
-
+    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+#       # 'if' transformations are currently unsupported: [NOT branch = master AND type = cron OR tag = bar]
     steps:
     - name: checkout
       uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 2.5
+    - run: npm install
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   test_38:
     runs-on: ubuntu-latest
-
+    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+#       # 'if' transformations are currently unsupported: [((tag = release) AND (branch = master))]
     steps:
     - name: checkout
       uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 2.5
+    - run: npm install
     - run: echo 'parent before_script'
     - run: echo 'parent script'
   build:
@@ -382,6 +559,10 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 2.5
+    - run: npm install
     - run: echo 'parent before_script'
     - run: echo "child build"
   deploy:
@@ -426,9 +607,15 @@ jobs:
     - test_38
     - build
     runs-on: ubuntu-latest
+    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+#       # 'if' transformations are currently unsupported: [branch = master]
     steps:
     - name: checkout
       uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 2.5
+    - run: npm install
     - run: echo 'parent before_script'
     - run: echo "child deploy"
 #     # deploy transformations are currently not supported
