@@ -10,15 +10,11 @@ env:
 jobs:
   test:
     runs-on: ${{ matrix.os }}
-    steps:
-    - name: checkout
-      uses: actions/checkout@v2
-#     # 'os' dependencies are currently unsupported
-    - uses: actions/setup-node@v2
-      with:
-        node-version: "${{ matrix.node_js }}"
-    - run: echo 'parent before_script'
-    - run: echo 'parent script'
+    env:
+      FOO: "${{ matrix.FOO }}"
+      BAR: "${{ matrix.BAR }}"
+      USE_NETWORK: "${{ matrix.USE_NETWORK }}"
+      ISOLATED: "${{ matrix.ISOLATED }}"
     strategy:
       matrix:
         USE_NETWORK:
@@ -30,17 +26,24 @@ jobs:
         os:
         - ubuntu-latest
         - windows-latest
+        node_js:
+         - 2.2
+         - 3.0
         include:
         - FOO: bar
           BAR: foo
         exclude:
         - node_js: 2.2
           os: linux
-    env:
-      FOO: "${{ matrix.FOO }}"
-      BAR: "${{ matrix.BAR }}"
-      USE_NETWORK: "${{ matrix.USE_NETWORK }}"
-      ISOLATED: "${{ matrix.ISOLATED }}"
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+#     # 'os' dependencies are currently unsupported
+    - uses: actions/setup-node@v2
+      with:
+        node-version: "${{ matrix.node_js }}"
+    - run: echo 'parent before_script'
+    - run: echo 'parent script'
   test_2:
     runs-on: ubuntu-latest
     steps:
