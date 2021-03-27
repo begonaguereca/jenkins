@@ -1,7 +1,5 @@
 name: jenkout-testing/travis-mega-pipeline
 on:
-#   # This item has no matching transformer
-#   builds_only_with_travis_yml: false
   push:
     branches:
     - master
@@ -266,6 +264,7 @@ jobs:
     - run: echo 'parent script'
   test_30:
     runs-on: ubuntu-latest
+]
     steps:
     - name: checkout
       uses: actions/checkout@v2
