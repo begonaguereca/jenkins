@@ -1,5 +1,7 @@
 name: jenkout-testing/travis-mega-pipeline
 on:
+#   # This item has no matching transformer
+#   builds_only_with_travis_yml: false
   push:
     branches:
     - master
@@ -10,6 +12,16 @@ env:
 jobs:
   test:
     runs-on: ${{ matrix.os }}
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+#     # 'os' dependencies are currently unsupported
+    - uses: actions/setup-node@v2
+      with:
+        node-version: "${{ matrix.node_js }}"
+    - run: npm install
+    - run: echo 'parent before_script'
+    - run: echo 'parent script'
     strategy:
       matrix:
         USE_NETWORK:
@@ -30,16 +42,6 @@ jobs:
         exclude:
         - node_js: 2.2
           os: linux
-    steps:
-    - name: checkout
-      uses: actions/checkout@v2
-#     # 'os' dependencies are currently unsupported
-    - uses: actions/setup-node@v2
-      with:
-        node-version: "${{ matrix.node_js }}"
-    - run: npm install
-    - run: echo 'parent before_script'
-    - run: echo 'parent script'
     env:
       FOO: "${{ matrix.FOO }}"
       BAR: "${{ matrix.BAR }}"
@@ -164,8 +166,7 @@ jobs:
     - run: echo 'after deploy is working'
   test_12:
     runs-on: ubuntu-latest
-    if: ${{ success() }}
-#       # 'if' transformations are currently unsupported: [true]
+    if: ${{ true }}
     steps:
     - name: checkout
       uses: actions/checkout@v2
@@ -177,8 +178,7 @@ jobs:
     - run: echo 'parent script'
   test_13:
     runs-on: ubuntu-latest
-    if: ${{ success() }}
-#       # 'if' transformations are currently unsupported: [branch = master]
+    if: ${{ github.ref == 'refs/heads/master' }}
     steps:
     - name: checkout
       uses: actions/checkout@v2
@@ -190,8 +190,7 @@ jobs:
     - run: echo 'parent script'
   test_14:
     runs-on: ubuntu-latest
-    if: ${{ success() }}
-#       # 'if' transformations are currently unsupported: [branch != master]
+    if: ${{ github.ref != 'refs/heads/master' }}
     steps:
     - name: checkout
       uses: actions/checkout@v2
@@ -203,177 +202,228 @@ jobs:
     - run: echo 'parent script'
   test_15:
     runs-on: ubuntu-latest
-    if: ${{ success() }}
-#       # 'if' transformations are currently unsupported: [env(foo) IS present]
+    
     steps:
     - name: checkout
       uses: actions/checkout@v2
+      if: "${{ env.foo }}"
     - uses: actions/setup-node@v2
       with:
         node-version: 2.5
+      if: "${{ env.foo }}"
     - run: npm install
+      if: "${{ env.foo }}"
     - run: echo 'parent before_script'
+      if: "${{ env.foo }}"
     - run: echo 'parent script'
+      if: "${{ env.foo }}"
   test_16:
     runs-on: ubuntu-latest
-    if: ${{ success() }}
-#       # 'if' transformations are currently unsupported: [env(foo) IS NOT present]
+    
     steps:
     - name: checkout
       uses: actions/checkout@v2
+      if: "${{ !env.foo }}"
     - uses: actions/setup-node@v2
       with:
         node-version: 2.5
+      if: "${{ !env.foo }}"
     - run: npm install
+      if: "${{ !env.foo }}"
     - run: echo 'parent before_script'
+      if: "${{ !env.foo }}"
     - run: echo 'parent script'
+      if: "${{ !env.foo }}"
   test_17:
     runs-on: ubuntu-latest
-    if: ${{ success() }}
-#       # 'if' transformations are currently unsupported: [NOT env(foo) IS present]
+    
     steps:
     - name: checkout
       uses: actions/checkout@v2
+      if: "${{ !env.foo }}"
     - uses: actions/setup-node@v2
       with:
         node-version: 2.5
+      if: "${{ !env.foo }}"
     - run: npm install
+      if: "${{ !env.foo }}"
     - run: echo 'parent before_script'
+      if: "${{ !env.foo }}"
     - run: echo 'parent script'
+      if: "${{ !env.foo }}"
   test_18:
     runs-on: ubuntu-latest
-    if: ${{ success() }}
-#       # 'if' transformations are currently unsupported: [env(foo) IS blank]
+    
     steps:
     - name: checkout
       uses: actions/checkout@v2
+      if: "${{ !env.foo }}"
     - uses: actions/setup-node@v2
       with:
         node-version: 2.5
+      if: "${{ !env.foo }}"
     - run: npm install
+      if: "${{ !env.foo }}"
     - run: echo 'parent before_script'
+      if: "${{ !env.foo }}"
     - run: echo 'parent script'
+      if: "${{ !env.foo }}"
   test_19:
     runs-on: ubuntu-latest
-    if: ${{ success() }}
-#       # 'if' transformations are currently unsupported: [env(foo) IS NOT blank]
+    
     steps:
     - name: checkout
       uses: actions/checkout@v2
+      if: "${{ env.foo }}"
     - uses: actions/setup-node@v2
       with:
         node-version: 2.5
+      if: "${{ env.foo }}"
     - run: npm install
+      if: "${{ env.foo }}"
     - run: echo 'parent before_script'
+      if: "${{ env.foo }}"
     - run: echo 'parent script'
+      if: "${{ env.foo }}"
   test_20:
     runs-on: ubuntu-latest
-    if: ${{ success() }}
-#       # 'if' transformations are currently unsupported: [NOT env(foo) IS blank]
+    
     steps:
     - name: checkout
       uses: actions/checkout@v2
+      if: "${{ !!env.foo }}"
     - uses: actions/setup-node@v2
       with:
         node-version: 2.5
+      if: "${{ !!env.foo }}"
     - run: npm install
+      if: "${{ !!env.foo }}"
     - run: echo 'parent before_script'
+      if: "${{ !!env.foo }}"
     - run: echo 'parent script'
+      if: "${{ !!env.foo }}"
   test_21:
     runs-on: ubuntu-latest
-    if: ${{ success() }}
-#       # 'if' transformations are currently unsupported: [env(foo) IS true]
+    
     steps:
     - name: checkout
       uses: actions/checkout@v2
+      if: "${{ env.foo }}"
     - uses: actions/setup-node@v2
       with:
         node-version: 2.5
+      if: "${{ env.foo }}"
     - run: npm install
+      if: "${{ env.foo }}"
     - run: echo 'parent before_script'
+      if: "${{ env.foo }}"
     - run: echo 'parent script'
+      if: "${{ env.foo }}"
   test_22:
     runs-on: ubuntu-latest
-    if: ${{ success() }}
-#       # 'if' transformations are currently unsupported: [env(foo) IS NOT true]
+    
     steps:
     - name: checkout
       uses: actions/checkout@v2
+      if: "${{ !env.foo }}"
     - uses: actions/setup-node@v2
       with:
         node-version: 2.5
+      if: "${{ !env.foo }}"
     - run: npm install
+      if: "${{ !env.foo }}"
     - run: echo 'parent before_script'
+      if: "${{ !env.foo }}"
     - run: echo 'parent script'
+      if: "${{ !env.foo }}"
   test_23:
     runs-on: ubuntu-latest
-    if: ${{ success() }}
-#       # 'if' transformations are currently unsupported: [NOT env(foo) IS true]
+    
     steps:
     - name: checkout
       uses: actions/checkout@v2
+      if: "${{ !env.foo }}"
     - uses: actions/setup-node@v2
       with:
         node-version: 2.5
+      if: "${{ !env.foo }}"
     - run: npm install
+      if: "${{ !env.foo }}"
     - run: echo 'parent before_script'
+      if: "${{ !env.foo }}"
     - run: echo 'parent script'
+      if: "${{ !env.foo }}"
   test_24:
     runs-on: ubuntu-latest
-    if: ${{ success() }}
-#       # 'if' transformations are currently unsupported: [env(foo) IS false]
+    
     steps:
     - name: checkout
       uses: actions/checkout@v2
+      if: "${{ !env.foo }}"
     - uses: actions/setup-node@v2
       with:
         node-version: 2.5
+      if: "${{ !env.foo }}"
     - run: npm install
+      if: "${{ !env.foo }}"
     - run: echo 'parent before_script'
+      if: "${{ !env.foo }}"
     - run: echo 'parent script'
+      if: "${{ !env.foo }}"
   test_25:
     runs-on: ubuntu-latest
-    if: ${{ success() }}
-#       # 'if' transformations are currently unsupported: [env(foo) IS NOT false]
+    
     steps:
     - name: checkout
       uses: actions/checkout@v2
+      if: "${{ env.foo }}"
     - uses: actions/setup-node@v2
       with:
         node-version: 2.5
+      if: "${{ env.foo }}"
     - run: npm install
+      if: "${{ env.foo }}"
     - run: echo 'parent before_script'
+      if: "${{ env.foo }}"
     - run: echo 'parent script'
+      if: "${{ env.foo }}"
   test_26:
     runs-on: ubuntu-latest
-    if: ${{ success() }}
-#       # 'if' transformations are currently unsupported: [NOT env(foo) IS false]
+    
     steps:
     - name: checkout
       uses: actions/checkout@v2
+      if: "${{ !!env.foo }}"
     - uses: actions/setup-node@v2
       with:
         node-version: 2.5
+      if: "${{ !!env.foo }}"
     - run: npm install
+      if: "${{ !!env.foo }}"
     - run: echo 'parent before_script'
+      if: "${{ !!env.foo }}"
     - run: echo 'parent script'
+      if: "${{ !!env.foo }}"
   test_27:
     runs-on: ubuntu-latest
-    if: ${{ success() }}
-#       # 'if' transformations are currently unsupported: [env(FOO) = type]
+    
     steps:
     - name: checkout
       uses: actions/checkout@v2
+      if: "${{ env.FOO == github.event_name }}"
     - uses: actions/setup-node@v2
       with:
         node-version: 2.5
+      if: "${{ env.FOO == github.event_name }}"
     - run: npm install
+      if: "${{ env.FOO == github.event_name }}"
     - run: echo 'parent before_script'
+      if: "${{ env.FOO == github.event_name }}"
     - run: echo 'parent script'
+      if: "${{ env.FOO == github.event_name }}"
   test_28:
     runs-on: ubuntu-latest
-    if: ${{ success() }}
-#       # 'if' transformations are currently unsupported: [concat("foo", "-", "bar") = "foo-bar"]
+    if: ${{ join(fromJson('["foo", "-", "bar"]')) == 'foo-bar' }}
     steps:
     - name: checkout
       uses: actions/checkout@v2
@@ -385,21 +435,23 @@ jobs:
     - run: echo 'parent script'
   test_29:
     runs-on: ubuntu-latest
-    if: ${{ success() }}
-#       # 'if' transformations are currently unsupported: [env(FOO) = env(BAR)]
+    
     steps:
     - name: checkout
       uses: actions/checkout@v2
+      if: "${{ env.FOO == env.BAR }}"
     - uses: actions/setup-node@v2
       with:
         node-version: 2.5
+      if: "${{ env.FOO == env.BAR }}"
     - run: npm install
+      if: "${{ env.FOO == env.BAR }}"
     - run: echo 'parent before_script'
+      if: "${{ env.FOO == env.BAR }}"
     - run: echo 'parent script'
+      if: "${{ env.FOO == env.BAR }}"
   test_30:
     runs-on: ubuntu-latest
-    if: ${{ success() }}
-#       # 'if' transformations are currently unsupported: [branch =~ /^(one|two)-three$/]
     steps:
     - name: checkout
       uses: actions/checkout@v2
@@ -411,8 +463,7 @@ jobs:
     - run: echo 'parent script'
   test_31:
     runs-on: ubuntu-latest
-    if: ${{ success() }}
-#       # 'if' transformations are currently unsupported: [branch IN (one, other)]
+    if: ${{ contains(fromJson('["one", "other"]'), github.ref) }}
     steps:
     - name: checkout
       uses: actions/checkout@v2
@@ -424,34 +475,41 @@ jobs:
     - run: echo 'parent script'
   test_32:
     runs-on: ubuntu-latest
-    if: ${{ success() }}
-#       # 'if' transformations are currently unsupported: [repo IN (env(ONE), env(OTHER))]
+    
     steps:
     - name: checkout
       uses: actions/checkout@v2
+      if: ${{ contains(fromJson('["env.ONE", "env.OTHER"]'), github.repository) }}
     - uses: actions/setup-node@v2
       with:
         node-version: 2.5
+      if: ${{ contains(fromJson('["env.ONE", "env.OTHER"]'), github.repository) }}
     - run: npm install
+      if: ${{ contains(fromJson('["env.ONE", "env.OTHER"]'), github.repository) }}
     - run: echo 'parent before_script'
+      if: ${{ contains(fromJson('["env.ONE", "env.OTHER"]'), github.repository) }}
     - run: echo 'parent script'
+      if: ${{ contains(fromJson('["env.ONE", "env.OTHER"]'), github.repository) }}
   test_33:
     runs-on: ubuntu-latest
-    if: ${{ success() }}
-#       # 'if' transformations are currently unsupported: [env(env(FOO))]
+    
     steps:
     - name: checkout
       uses: actions/checkout@v2
+      if: "${{ env.env.FOO }}"
     - uses: actions/setup-node@v2
       with:
         node-version: 2.5
+      if: "${{ env.env.FOO }}"
     - run: npm install
+      if: "${{ env.env.FOO }}"
     - run: echo 'parent before_script'
+      if: "${{ env.env.FOO }}"
     - run: echo 'parent script'
+      if: "${{ env.env.FOO }}"
   test_34:
     runs-on: ubuntu-latest
-    if: ${{ success() }}
-#       # 'if' transformations are currently unsupported: [branch = master AND type = cron]
+    if: ${{ github.ref == 'refs/heads/master' && github.event_name == 'schedule' }}
     steps:
     - name: checkout
       uses: actions/checkout@v2
@@ -463,8 +521,7 @@ jobs:
     - run: echo 'parent script'
   test_35:
     runs-on: ubuntu-latest
-    if: ${{ success() }}
-#       # 'if' transformations are currently unsupported: [type = cron OR tag = bar]
+    if: ${{ github.event_name == 'schedule' || github.ref == 'refs/tags/bar' }}
     steps:
     - name: checkout
       uses: actions/checkout@v2
@@ -476,8 +533,7 @@ jobs:
     - run: echo 'parent script'
   test_36:
     runs-on: ubuntu-latest
-    if: ${{ success() }}
-#       # 'if' transformations are currently unsupported: [NOT branch = master]
+    if: ${{ !github.ref == 'refs/heads/master' }}
     steps:
     - name: checkout
       uses: actions/checkout@v2
@@ -489,8 +545,7 @@ jobs:
     - run: echo 'parent script'
   test_37:
     runs-on: ubuntu-latest
-    if: ${{ success() }}
-#       # 'if' transformations are currently unsupported: [NOT branch = master AND type = cron OR tag = bar]
+    if: ${{ !github.ref == 'refs/heads/master' && github.event_name == 'schedule' || github.ref == 'refs/tags/bar' }}
     steps:
     - name: checkout
       uses: actions/checkout@v2
@@ -502,8 +557,7 @@ jobs:
     - run: echo 'parent script'
   test_38:
     runs-on: ubuntu-latest
-    if: ${{ success() }}
-#       # 'if' transformations are currently unsupported: [((tag = release) AND (branch = master))]
+    if: ${{ (github.ref == 'refs/tags/release') && (github.ref == 'refs/heads/master') }}
     steps:
     - name: checkout
       uses: actions/checkout@v2
@@ -607,8 +661,7 @@ jobs:
     - test_38
     - build
     runs-on: ubuntu-latest
-    if: ${{ success() }}
-#       # 'if' transformations are currently unsupported: [branch = master]
+    if: ${{ github.ref == 'refs/heads/master' }}
     steps:
     - name: checkout
       uses: actions/checkout@v2
