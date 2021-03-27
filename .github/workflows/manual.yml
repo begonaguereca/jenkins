@@ -9,11 +9,6 @@ env:
   TIMEOUT: '1000'
 jobs:
   test:
-    env:
-      FOO: "${{ matrix.FOO }}"
-      BAR: "${{ matrix.BAR }}"
-      USE_NETWORK: "${{ matrix.USE_NETWORK }}"
-      ISOLATED: "${{ matrix.ISOLATED }}"
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -45,6 +40,11 @@ jobs:
     - run: npm install
     - run: echo 'parent before_script'
     - run: echo 'parent script'
+    env:
+      FOO: "${{ matrix.FOO }}"
+      BAR: "${{ matrix.BAR }}"
+      USE_NETWORK: "${{ matrix.USE_NETWORK }}"
+      ISOLATED: "${{ matrix.ISOLATED }}"
   test_2:
     runs-on: ubuntu-latest
     steps:
@@ -164,7 +164,7 @@ jobs:
     - run: echo 'after deploy is working'
   test_12:
     runs-on: ubuntu-latest
-    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+    if: ${{ success() }}
 #       # 'if' transformations are currently unsupported: [true]
     steps:
     - name: checkout
@@ -177,7 +177,7 @@ jobs:
     - run: echo 'parent script'
   test_13:
     runs-on: ubuntu-latest
-    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+    if: ${{ success() }}
 #       # 'if' transformations are currently unsupported: [branch = master]
     steps:
     - name: checkout
@@ -190,7 +190,7 @@ jobs:
     - run: echo 'parent script'
   test_14:
     runs-on: ubuntu-latest
-    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+    if: ${{ success() }}
 #       # 'if' transformations are currently unsupported: [branch != master]
     steps:
     - name: checkout
@@ -203,7 +203,7 @@ jobs:
     - run: echo 'parent script'
   test_15:
     runs-on: ubuntu-latest
-    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+    if: ${{ success() }}
 #       # 'if' transformations are currently unsupported: [env(foo) IS present]
     steps:
     - name: checkout
@@ -216,7 +216,7 @@ jobs:
     - run: echo 'parent script'
   test_16:
     runs-on: ubuntu-latest
-    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+    if: ${{ success() }}
 #       # 'if' transformations are currently unsupported: [env(foo) IS NOT present]
     steps:
     - name: checkout
@@ -229,7 +229,7 @@ jobs:
     - run: echo 'parent script'
   test_17:
     runs-on: ubuntu-latest
-    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+    if: ${{ success() }}
 #       # 'if' transformations are currently unsupported: [NOT env(foo) IS present]
     steps:
     - name: checkout
@@ -242,7 +242,7 @@ jobs:
     - run: echo 'parent script'
   test_18:
     runs-on: ubuntu-latest
-    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+    if: ${{ success() }}
 #       # 'if' transformations are currently unsupported: [env(foo) IS blank]
     steps:
     - name: checkout
@@ -255,7 +255,7 @@ jobs:
     - run: echo 'parent script'
   test_19:
     runs-on: ubuntu-latest
-    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+    if: ${{ success() }}
 #       # 'if' transformations are currently unsupported: [env(foo) IS NOT blank]
     steps:
     - name: checkout
@@ -268,7 +268,7 @@ jobs:
     - run: echo 'parent script'
   test_20:
     runs-on: ubuntu-latest
-    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+    if: ${{ success() }}
 #       # 'if' transformations are currently unsupported: [NOT env(foo) IS blank]
     steps:
     - name: checkout
@@ -281,7 +281,7 @@ jobs:
     - run: echo 'parent script'
   test_21:
     runs-on: ubuntu-latest
-    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+    if: ${{ success() }}
 #       # 'if' transformations are currently unsupported: [env(foo) IS true]
     steps:
     - name: checkout
@@ -294,7 +294,7 @@ jobs:
     - run: echo 'parent script'
   test_22:
     runs-on: ubuntu-latest
-    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+    if: ${{ success() }}
 #       # 'if' transformations are currently unsupported: [env(foo) IS NOT true]
     steps:
     - name: checkout
@@ -307,7 +307,7 @@ jobs:
     - run: echo 'parent script'
   test_23:
     runs-on: ubuntu-latest
-    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+    if: ${{ success() }}
 #       # 'if' transformations are currently unsupported: [NOT env(foo) IS true]
     steps:
     - name: checkout
@@ -320,7 +320,7 @@ jobs:
     - run: echo 'parent script'
   test_24:
     runs-on: ubuntu-latest
-    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+    if: ${{ success() }}
 #       # 'if' transformations are currently unsupported: [env(foo) IS false]
     steps:
     - name: checkout
@@ -333,7 +333,7 @@ jobs:
     - run: echo 'parent script'
   test_25:
     runs-on: ubuntu-latest
-    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+    if: ${{ success() }}
 #       # 'if' transformations are currently unsupported: [env(foo) IS NOT false]
     steps:
     - name: checkout
@@ -346,7 +346,7 @@ jobs:
     - run: echo 'parent script'
   test_26:
     runs-on: ubuntu-latest
-    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+    if: ${{ success() }}
 #       # 'if' transformations are currently unsupported: [NOT env(foo) IS false]
     steps:
     - name: checkout
@@ -359,7 +359,7 @@ jobs:
     - run: echo 'parent script'
   test_27:
     runs-on: ubuntu-latest
-    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+    if: ${{ success() }}
 #       # 'if' transformations are currently unsupported: [env(FOO) = type]
     steps:
     - name: checkout
@@ -372,7 +372,7 @@ jobs:
     - run: echo 'parent script'
   test_28:
     runs-on: ubuntu-latest
-    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+    if: ${{ success() }}
 #       # 'if' transformations are currently unsupported: [concat("foo", "-", "bar") = "foo-bar"]
     steps:
     - name: checkout
@@ -385,7 +385,7 @@ jobs:
     - run: echo 'parent script'
   test_29:
     runs-on: ubuntu-latest
-    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+    if: ${{ success() }}
 #       # 'if' transformations are currently unsupported: [env(FOO) = env(BAR)]
     steps:
     - name: checkout
@@ -398,7 +398,7 @@ jobs:
     - run: echo 'parent script'
   test_30:
     runs-on: ubuntu-latest
-    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+    if: ${{ success() }}
 #       # 'if' transformations are currently unsupported: [branch =~ /^(one|two)-three$/]
     steps:
     - name: checkout
@@ -411,7 +411,7 @@ jobs:
     - run: echo 'parent script'
   test_31:
     runs-on: ubuntu-latest
-    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+    if: ${{ success() }}
 #       # 'if' transformations are currently unsupported: [branch IN (one, other)]
     steps:
     - name: checkout
@@ -424,7 +424,7 @@ jobs:
     - run: echo 'parent script'
   test_32:
     runs-on: ubuntu-latest
-    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+    if: ${{ success() }}
 #       # 'if' transformations are currently unsupported: [repo IN (env(ONE), env(OTHER))]
     steps:
     - name: checkout
@@ -437,7 +437,7 @@ jobs:
     - run: echo 'parent script'
   test_33:
     runs-on: ubuntu-latest
-    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+    if: ${{ success() }}
 #       # 'if' transformations are currently unsupported: [env(env(FOO))]
     steps:
     - name: checkout
@@ -450,7 +450,7 @@ jobs:
     - run: echo 'parent script'
   test_34:
     runs-on: ubuntu-latest
-    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+    if: ${{ success() }}
 #       # 'if' transformations are currently unsupported: [branch = master AND type = cron]
     steps:
     - name: checkout
@@ -463,7 +463,7 @@ jobs:
     - run: echo 'parent script'
   test_35:
     runs-on: ubuntu-latest
-    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+    if: ${{ success() }}
 #       # 'if' transformations are currently unsupported: [type = cron OR tag = bar]
     steps:
     - name: checkout
@@ -476,7 +476,7 @@ jobs:
     - run: echo 'parent script'
   test_36:
     runs-on: ubuntu-latest
-    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+    if: ${{ success() }}
 #       # 'if' transformations are currently unsupported: [NOT branch = master]
     steps:
     - name: checkout
@@ -489,7 +489,7 @@ jobs:
     - run: echo 'parent script'
   test_37:
     runs-on: ubuntu-latest
-    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+    if: ${{ success() }}
 #       # 'if' transformations are currently unsupported: [NOT branch = master AND type = cron OR tag = bar]
     steps:
     - name: checkout
@@ -502,7 +502,7 @@ jobs:
     - run: echo 'parent script'
   test_38:
     runs-on: ubuntu-latest
-    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+    if: ${{ success() }}
 #       # 'if' transformations are currently unsupported: [((tag = release) AND (branch = master))]
     steps:
     - name: checkout
@@ -607,7 +607,7 @@ jobs:
     - test_38
     - build
     runs-on: ubuntu-latest
-    if: ${{ always }} ${{ always }} ${{ always }} ${{ always }}
+    if: ${{ success() }}
 #       # 'if' transformations are currently unsupported: [branch = master]
     steps:
     - name: checkout
