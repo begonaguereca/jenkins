@@ -1,674 +1,183 @@
-name: jenkout-testing/travis-mega-pipeline
+name: jenkout-testing/15
 on:
-#   # This item has no matching transformer
-#   builds_only_with_travis_yml: false
-  push:
-    branches:
-    - master
-    - stable
+  workflow_dispatch:
 env:
-  CAMPFIRE_TOKEN: abc123
-  TIMEOUT: '1000'
+  DOCKER_TAG: "`git rev-parse --short HEAD`x"
+  IKS_BETA_VERSION: '1'
+  SONAR_TOKEN: "$SONAR_TOKEN"
+  SONAR_NOTIFY_HOOK: "$SLACK_WEBHOOK"
+  SLACK_SECURITY_HOOK: "$SLACK_SECURITY_WEBHOOK"
+  ACCOUNT: "$ACCOUNT"
+  CLOUD_API_KEY: "$CLOUD_API_KEY"
 jobs:
-  test:
-    runs-on: ${{ matrix.os }}
-    steps:
-    - name: checkout
-      uses: actions/checkout@v2
-#     # 'os' dependencies are currently unsupported
-    - uses: actions/setup-node@v2
-      with:
-        node-version: "${{ matrix.node_js }}"
-    - run: npm install
-    - run: echo 'parent before_script'
-    - run: echo 'parent script'
-    strategy:
-      matrix:
-        USE_NETWORK:
-        - 'true'
-        - 'false'
-        ISOLATED:
-        - true
-        - false
-        node_js:
-        - 2.5
-        - 2.2
-        os:
-        - ubuntu-latest
-        - windows-latest
-        include:
-        - FOO: bar
-          BAR: foo
-        exclude:
-        - node_js: 2.2
-          os: linux
+  Lint & Audit & Publish:
+    runs-on: ubuntu 18.04
     env:
-      FOO: "${{ matrix.FOO }}"
-      BAR: "${{ matrix.BAR }}"
-      USE_NETWORK: "${{ matrix.USE_NETWORK }}"
-      ISOLATED: "${{ matrix.ISOLATED }}"
-  test_2:
-    runs-on: ubuntu-latest
+      TASK: lint
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - uses: actions/setup-node@v2
-      with:
-        node-version: 2.5
-    - run: echo 'before install is working'
-    - run: npm install
-    - run: echo 'parent before_script'
-    - run: echo 'parent script'
-  test_3:
-    runs-on: ubuntu-latest
+#     # cache transformations are currently not supported
+    - run: curl -sL https://ibm.biz/idt-installer | bash
+    - run: curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+    - run: some-cloud plugin update container-service
+    - run: npm ci --ignore-scripts
+    - run: npm run lint
+#     # notifications transformations are currently not supported
+#       - env: TASK=CR_cleanup
+  Lint & Audit & Publish_2:
+    runs-on: ubuntu 18.04
+    env:
+      TASK: audit
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - uses: actions/setup-node@v2
-      with:
-        node-version: 2.5
-    - run: echo 'install is working'
-    - run: echo 'parent before_script'
-    - run: echo 'parent script'
-  test_4:
-    runs-on: ubuntu-latest
+#     # cache transformations are currently not supported
+    - run: curl -sL https://ibm.biz/idt-installer | bash
+    - run: curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+    - run: some-cloud plugin update container-service
+    - run: npm ci --ignore-scripts
+    - run: npm run audit
+#     # notifications transformations are currently not supported
+    services:
+#       # 'services' transformations are currently unsupported
+#       - docker
+    continue-on-error:
+#       # 'continue-on-error' transformations are currently unsupported
+#       allow_failures:
+#       - env: TASK=CR_cleanup
+  Lint & Audit & Publish_3:
+    runs-on: ubuntu 18.04
+    env:
+      TASK: CR_cleanup
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - uses: actions/setup-node@v2
-      with:
-        node-version: 2.5
-    - run: npm install
-    - run: echo 'before script is working'
-    - run: echo 'parent script'
-  test_5:
-    runs-on: ubuntu-latest
+#     # cache transformations are currently not supported
+    - run: curl -sL https://ibm.biz/idt-installer | bash
+    - run: curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+    - run: some-cloud plugin update container-service
+    - run: npm ci --ignore-scripts
+    - run: "./bin/some-cloud.login.sh"
+    - run: "./bin/some-cloud.cr.cleanup.sh"
+#     # notifications transformations are currently not supported
+    services:
+#       # 'services' transformations are currently unsupported
+#       - docker
+    continue-on-error:
+#       # 'continue-on-error' transformations are currently unsupported
+#       allow_failures:
+#       - env: TASK=CR_cleanup
+  Lint & Audit & Publish_4:
+    runs-on: ubuntu 18.04
+    env:
+      TASK: publish
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - uses: actions/setup-node@v2
-      with:
-        node-version: 2.5
-    - run: npm install
-    - run: echo 'parent before_script'
-    - run: echo 'script is working'
-  test_6:
-    runs-on: ubuntu-latest
-    steps:
-    - name: checkout
-      uses: actions/checkout@v2
-    - uses: actions/setup-node@v2
-      with:
-        node-version: 2.5
-    - run: npm install
-    - run: echo 'parent before_script'
-    - run: echo 'parent script'
-    - run: echo 'after_script is working'
-  test_7:
-    runs-on: ubuntu-latest
-    steps:
-    - name: checkout
-      uses: actions/checkout@v2
-    - run: echo 'before cache is working'
-    - uses: actions/setup-node@v2
-      with:
-        node-version: 2.5
-    - run: npm install
-    - run: echo 'parent before_script'
-    - run: echo 'parent script'
-  test_8:
-    runs-on: ubuntu-latest
-    steps:
-    - name: checkout
-      uses: actions/checkout@v2
-    - uses: actions/setup-node@v2
-      with:
-        node-version: 2.5
-    - run: npm install
-    - run: echo 'parent before_script'
-    - run: echo 'parent script'
-    - run: echo 'after failure is working'
-  test_9:
-    runs-on: ubuntu-latest
-    steps:
-    - name: checkout
-      uses: actions/checkout@v2
-    - uses: actions/setup-node@v2
-      with:
-        node-version: 2.5
-    - run: npm install
-    - run: echo 'parent before_script'
-    - run: echo 'parent script'
-    - run: echo 'after success is working'
-  test_10:
-    runs-on: ubuntu-latest
-    steps:
-    - name: checkout
-      uses: actions/checkout@v2
-    - uses: actions/setup-node@v2
-      with:
-        node-version: 2.5
-    - run: npm install
-    - run: echo 'parent before_script'
-    - run: echo 'parent script'
-    - run: echo 'before deploy is working'
-  test_11:
-    runs-on: ubuntu-latest
-    steps:
-    - name: checkout
-      uses: actions/checkout@v2
-    - uses: actions/setup-node@v2
-      with:
-        node-version: 2.5
-    - run: npm install
-    - run: echo 'parent before_script'
-    - run: echo 'parent script'
-    - run: echo 'after deploy is working'
-  test_12:
-    runs-on: ubuntu-latest
-    if: ${{ true }}
-    steps:
-    - name: checkout
-      uses: actions/checkout@v2
-    - uses: actions/setup-node@v2
-      with:
-        node-version: 2.5
-    - run: npm install
-    - run: echo 'parent before_script'
-    - run: echo 'parent script'
-  test_13:
-    runs-on: ubuntu-latest
+#     # cache transformations are currently not supported
+    - run: curl -sL https://ibm.biz/idt-installer | bash
+    - run: curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+    - run: some-cloud plugin update container-service
+    - run: npm ci --ignore-scripts
+    - run: "./bin/some-cloud.login.sh"
+    - run: npm run docker:prodpublish
+#     # notifications transformations are currently not supported
+    services:
+#       # 'services' transformations are currently unsupported
+#       - docker
+    continue-on-error:
+#       # 'continue-on-error' transformations are currently unsupported
+#       allow_failures:
+#       - env: TASK=CR_cleanup
+  Vulnerability Assessment:
+    needs:
+    - Lint & Audit & Publish
+    - Lint & Audit & Publish_2
+    - Lint & Audit & Publish_3
+    - Lint & Audit & Publish_4
+    runs-on: ubuntu 18.04
+    env:
+      TASK: Vulnerability_Analysis
     if: ${{ github.ref == 'refs/heads/master' }}
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - uses: actions/setup-node@v2
-      with:
-        node-version: 2.5
-    - run: npm install
-    - run: echo 'parent before_script'
-    - run: echo 'parent script'
-  test_14:
-    runs-on: ubuntu-latest
-    if: ${{ github.ref != 'refs/heads/master' }}
-    steps:
-    - name: checkout
-      uses: actions/checkout@v2
-    - uses: actions/setup-node@v2
-      with:
-        node-version: 2.5
-    - run: npm install
-    - run: echo 'parent before_script'
-    - run: echo 'parent script'
-  test_15:
-    runs-on: ubuntu-latest
-    
-    steps:
-    - name: checkout
-      uses: actions/checkout@v2
-      if: "${{ env.foo }}"
-    - uses: actions/setup-node@v2
-      with:
-        node-version: 2.5
-      if: "${{ env.foo }}"
-    - run: npm install
-      if: "${{ env.foo }}"
-    - run: echo 'parent before_script'
-      if: "${{ env.foo }}"
-    - run: echo 'parent script'
-      if: "${{ env.foo }}"
-  test_16:
-    runs-on: ubuntu-latest
-    
-    steps:
-    - name: checkout
-      uses: actions/checkout@v2
-      if: "${{ !env.foo }}"
-    - uses: actions/setup-node@v2
-      with:
-        node-version: 2.5
-      if: "${{ !env.foo }}"
-    - run: npm install
-      if: "${{ !env.foo }}"
-    - run: echo 'parent before_script'
-      if: "${{ !env.foo }}"
-    - run: echo 'parent script'
-      if: "${{ !env.foo }}"
-  test_17:
-    runs-on: ubuntu-latest
-    
-    steps:
-    - name: checkout
-      uses: actions/checkout@v2
-      if: "${{ !env.foo }}"
-    - uses: actions/setup-node@v2
-      with:
-        node-version: 2.5
-      if: "${{ !env.foo }}"
-    - run: npm install
-      if: "${{ !env.foo }}"
-    - run: echo 'parent before_script'
-      if: "${{ !env.foo }}"
-    - run: echo 'parent script'
-      if: "${{ !env.foo }}"
-  test_18:
-    runs-on: ubuntu-latest
-    
-    steps:
-    - name: checkout
-      uses: actions/checkout@v2
-      if: "${{ !env.foo }}"
-    - uses: actions/setup-node@v2
-      with:
-        node-version: 2.5
-      if: "${{ !env.foo }}"
-    - run: npm install
-      if: "${{ !env.foo }}"
-    - run: echo 'parent before_script'
-      if: "${{ !env.foo }}"
-    - run: echo 'parent script'
-      if: "${{ !env.foo }}"
-  test_19:
-    runs-on: ubuntu-latest
-    
-    steps:
-    - name: checkout
-      uses: actions/checkout@v2
-      if: "${{ env.foo }}"
-    - uses: actions/setup-node@v2
-      with:
-        node-version: 2.5
-      if: "${{ env.foo }}"
-    - run: npm install
-      if: "${{ env.foo }}"
-    - run: echo 'parent before_script'
-      if: "${{ env.foo }}"
-    - run: echo 'parent script'
-      if: "${{ env.foo }}"
-  test_20:
-    runs-on: ubuntu-latest
-    
-    steps:
-    - name: checkout
-      uses: actions/checkout@v2
-      if: "${{ !!env.foo }}"
-    - uses: actions/setup-node@v2
-      with:
-        node-version: 2.5
-      if: "${{ !!env.foo }}"
-    - run: npm install
-      if: "${{ !!env.foo }}"
-    - run: echo 'parent before_script'
-      if: "${{ !!env.foo }}"
-    - run: echo 'parent script'
-      if: "${{ !!env.foo }}"
-  test_21:
-    runs-on: ubuntu-latest
-    
-    steps:
-    - name: checkout
-      uses: actions/checkout@v2
-      if: "${{ env.foo }}"
-    - uses: actions/setup-node@v2
-      with:
-        node-version: 2.5
-      if: "${{ env.foo }}"
-    - run: npm install
-      if: "${{ env.foo }}"
-    - run: echo 'parent before_script'
-      if: "${{ env.foo }}"
-    - run: echo 'parent script'
-      if: "${{ env.foo }}"
-  test_22:
-    runs-on: ubuntu-latest
-    
-    steps:
-    - name: checkout
-      uses: actions/checkout@v2
-      if: "${{ !env.foo }}"
-    - uses: actions/setup-node@v2
-      with:
-        node-version: 2.5
-      if: "${{ !env.foo }}"
-    - run: npm install
-      if: "${{ !env.foo }}"
-    - run: echo 'parent before_script'
-      if: "${{ !env.foo }}"
-    - run: echo 'parent script'
-      if: "${{ !env.foo }}"
-  test_23:
-    runs-on: ubuntu-latest
-    
-    steps:
-    - name: checkout
-      uses: actions/checkout@v2
-      if: "${{ !env.foo }}"
-    - uses: actions/setup-node@v2
-      with:
-        node-version: 2.5
-      if: "${{ !env.foo }}"
-    - run: npm install
-      if: "${{ !env.foo }}"
-    - run: echo 'parent before_script'
-      if: "${{ !env.foo }}"
-    - run: echo 'parent script'
-      if: "${{ !env.foo }}"
-  test_24:
-    runs-on: ubuntu-latest
-    
-    steps:
-    - name: checkout
-      uses: actions/checkout@v2
-      if: "${{ !env.foo }}"
-    - uses: actions/setup-node@v2
-      with:
-        node-version: 2.5
-      if: "${{ !env.foo }}"
-    - run: npm install
-      if: "${{ !env.foo }}"
-    - run: echo 'parent before_script'
-      if: "${{ !env.foo }}"
-    - run: echo 'parent script'
-      if: "${{ !env.foo }}"
-  test_25:
-    runs-on: ubuntu-latest
-    
-    steps:
-    - name: checkout
-      uses: actions/checkout@v2
-      if: "${{ env.foo }}"
-    - uses: actions/setup-node@v2
-      with:
-        node-version: 2.5
-      if: "${{ env.foo }}"
-    - run: npm install
-      if: "${{ env.foo }}"
-    - run: echo 'parent before_script'
-      if: "${{ env.foo }}"
-    - run: echo 'parent script'
-      if: "${{ env.foo }}"
-  test_26:
-    runs-on: ubuntu-latest
-    
-    steps:
-    - name: checkout
-      uses: actions/checkout@v2
-      if: "${{ !!env.foo }}"
-    - uses: actions/setup-node@v2
-      with:
-        node-version: 2.5
-      if: "${{ !!env.foo }}"
-    - run: npm install
-      if: "${{ !!env.foo }}"
-    - run: echo 'parent before_script'
-      if: "${{ !!env.foo }}"
-    - run: echo 'parent script'
-      if: "${{ !!env.foo }}"
-  test_27:
-    runs-on: ubuntu-latest
-    
-    steps:
-    - name: checkout
-      uses: actions/checkout@v2
-      if: "${{ env.FOO == github.event_name }}"
-    - uses: actions/setup-node@v2
-      with:
-        node-version: 2.5
-      if: "${{ env.FOO == github.event_name }}"
-    - run: npm install
-      if: "${{ env.FOO == github.event_name }}"
-    - run: echo 'parent before_script'
-      if: "${{ env.FOO == github.event_name }}"
-    - run: echo 'parent script'
-      if: "${{ env.FOO == github.event_name }}"
-  test_28:
-    runs-on: ubuntu-latest
-    if: ${{ join(fromJson('["foo", "-", "bar"]')) == 'foo-bar' }}
-    steps:
-    - name: checkout
-      uses: actions/checkout@v2
-    - uses: actions/setup-node@v2
-      with:
-        node-version: 2.5
-    - run: npm install
-    - run: echo 'parent before_script'
-    - run: echo 'parent script'
-  test_29:
-    runs-on: ubuntu-latest
-    
-    steps:
-    - name: checkout
-      uses: actions/checkout@v2
-      if: "${{ env.FOO == env.BAR }}"
-    - uses: actions/setup-node@v2
-      with:
-        node-version: 2.5
-      if: "${{ env.FOO == env.BAR }}"
-    - run: npm install
-      if: "${{ env.FOO == env.BAR }}"
-    - run: echo 'parent before_script'
-      if: "${{ env.FOO == env.BAR }}"
-    - run: echo 'parent script'
-      if: "${{ env.FOO == env.BAR }}"
-  test_30:
-    runs-on: ubuntu-latest
-    steps:
-    - name: checkout
-      uses: actions/checkout@v2
-    - uses: actions/setup-node@v2
-      with:
-        node-version: 2.5
-    - run: npm install
-    - run: echo 'parent before_script'
-    - run: echo 'parent script'
-  test_31:
-    runs-on: ubuntu-latest
-    if: ${{ contains(fromJson('["one", "other"]'), github.ref) }}
-    steps:
-    - name: checkout
-      uses: actions/checkout@v2
-    - uses: actions/setup-node@v2
-      with:
-        node-version: 2.5
-    - run: npm install
-    - run: echo 'parent before_script'
-    - run: echo 'parent script'
-  test_32:
-    runs-on: ubuntu-latest
-    
-    steps:
-    - name: checkout
-      uses: actions/checkout@v2
-      if: ${{ contains(fromJson('["env.ONE", "env.OTHER"]'), github.repository) }}
-    - uses: actions/setup-node@v2
-      with:
-        node-version: 2.5
-      if: ${{ contains(fromJson('["env.ONE", "env.OTHER"]'), github.repository) }}
-    - run: npm install
-      if: ${{ contains(fromJson('["env.ONE", "env.OTHER"]'), github.repository) }}
-    - run: echo 'parent before_script'
-      if: ${{ contains(fromJson('["env.ONE", "env.OTHER"]'), github.repository) }}
-    - run: echo 'parent script'
-      if: ${{ contains(fromJson('["env.ONE", "env.OTHER"]'), github.repository) }}
-  test_33:
-    runs-on: ubuntu-latest
-    
-    steps:
-    - name: checkout
-      uses: actions/checkout@v2
-      if: "${{ env.env.FOO }}"
-    - uses: actions/setup-node@v2
-      with:
-        node-version: 2.5
-      if: "${{ env.env.FOO }}"
-    - run: npm install
-      if: "${{ env.env.FOO }}"
-    - run: echo 'parent before_script'
-      if: "${{ env.env.FOO }}"
-    - run: echo 'parent script'
-      if: "${{ env.env.FOO }}"
-  test_34:
-    runs-on: ubuntu-latest
-    if: ${{ github.ref == 'refs/heads/master' && github.event_name == 'schedule' }}
-    steps:
-    - name: checkout
-      uses: actions/checkout@v2
-    - uses: actions/setup-node@v2
-      with:
-        node-version: 2.5
-    - run: npm install
-    - run: echo 'parent before_script'
-    - run: echo 'parent script'
-  test_35:
-    runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'schedule' || github.ref == 'refs/tags/bar' }}
-    steps:
-    - name: checkout
-      uses: actions/checkout@v2
-    - uses: actions/setup-node@v2
-      with:
-        node-version: 2.5
-    - run: npm install
-    - run: echo 'parent before_script'
-    - run: echo 'parent script'
-  test_36:
-    runs-on: ubuntu-latest
-    if: ${{ !github.ref == 'refs/heads/master' }}
-    steps:
-    - name: checkout
-      uses: actions/checkout@v2
-    - uses: actions/setup-node@v2
-      with:
-        node-version: 2.5
-    - run: npm install
-    - run: echo 'parent before_script'
-    - run: echo 'parent script'
-  test_37:
-    runs-on: ubuntu-latest
-    if: ${{ !github.ref == 'refs/heads/master' && github.event_name == 'schedule' || github.ref == 'refs/tags/bar' }}
-    steps:
-    - name: checkout
-      uses: actions/checkout@v2
-    - uses: actions/setup-node@v2
-      with:
-        node-version: 2.5
-    - run: npm install
-    - run: echo 'parent before_script'
-    - run: echo 'parent script'
-  test_38:
-    runs-on: ubuntu-latest
-    if: ${{ (github.ref == 'refs/tags/release') && (github.ref == 'refs/heads/master') }}
-    steps:
-    - name: checkout
-      uses: actions/checkout@v2
-    - uses: actions/setup-node@v2
-      with:
-        node-version: 2.5
-    - run: npm install
-    - run: echo 'parent before_script'
-    - run: echo 'parent script'
-  build:
+#     # cache transformations are currently not supported
+    - run: curl -sL https://ibm.biz/idt-installer | bash
+    - run: curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+    - run: some-cloud plugin update container-service
+    - run: npm ci --ignore-scripts
+    - run: "./bin/vulnerability-scanner.sh ${DOCKER_TAG}"
+#     # notifications transformations are currently not supported
+    services:
+#       # 'services' transformations are currently unsupported
+#       - docker
+    continue-on-error:
+#       # 'continue-on-error' transformations are currently unsupported
+#       allow_failures:
+#       - env: TASK=CR_cleanup
+  Deploy:
     needs:
-    - test
-    - test_2
-    - test_3
-    - test_4
-    - test_5
-    - test_6
-    - test_7
-    - test_8
-    - test_9
-    - test_10
-    - test_11
-    - test_12
-    - test_13
-    - test_14
-    - test_15
-    - test_16
-    - test_17
-    - test_18
-    - test_19
-    - test_20
-    - test_21
-    - test_22
-    - test_23
-    - test_24
-    - test_25
-    - test_26
-    - test_27
-    - test_28
-    - test_29
-    - test_30
-    - test_31
-    - test_32
-    - test_33
-    - test_34
-    - test_35
-    - test_36
-    - test_37
-    - test_38
-    runs-on: ubuntu-latest
+    - Lint & Audit & Publish
+    - Lint & Audit & Publish_2
+    - Lint & Audit & Publish_3
+    - Lint & Audit & Publish_4
+    - Vulnerability Assessment
+    runs-on: ubuntu 18.04
     env:
-      ISOLATED: true
-    steps:
-    - name: checkout
-      uses: actions/checkout@v2
-    - uses: actions/setup-node@v2
-      with:
-        node-version: 2.5
-    - run: npm install
-    - run: echo 'parent before_script'
-    - run: echo "child build"
-  deploy:
-    needs:
-    - test
-    - test_2
-    - test_3
-    - test_4
-    - test_5
-    - test_6
-    - test_7
-    - test_8
-    - test_9
-    - test_10
-    - test_11
-    - test_12
-    - test_13
-    - test_14
-    - test_15
-    - test_16
-    - test_17
-    - test_18
-    - test_19
-    - test_20
-    - test_21
-    - test_22
-    - test_23
-    - test_24
-    - test_25
-    - test_26
-    - test_27
-    - test_28
-    - test_29
-    - test_30
-    - test_31
-    - test_32
-    - test_33
-    - test_34
-    - test_35
-    - test_36
-    - test_37
-    - test_38
-    - build
-    runs-on: ubuntu-latest
+      TASK: deploy-staging
     if: ${{ github.ref == 'refs/heads/master' }}
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - uses: actions/setup-node@v2
-      with:
-        node-version: 2.5
-    - run: npm install
-    - run: echo 'parent before_script'
-    - run: echo "child deploy"
-#     # deploy transformations are currently not supported
+#     # cache transformations are currently not supported
+    - run: curl -sL https://ibm.biz/idt-installer | bash
+    - run: curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+    - run: some-cloud plugin update container-service
+    - run: npm ci --ignore-scripts
+    - run: "./bin/some-cloud.login.sh"
+    - run: "./bin/update.k8s.staging.sh"
+#     # notifications transformations are currently not supported
+    services:
+#       # 'services' transformations are currently unsupported
+#       - docker
+    continue-on-error:
+#       # 'continue-on-error' transformations are currently unsupported
+#       allow_failures:
+#       - env: TASK=CR_cleanup
+  Sonar:
+    needs:
+    - Lint & Audit & Publish
+    - Lint & Audit & Publish_2
+    - Lint & Audit & Publish_3
+    - Lint & Audit & Publish_4
+    - Vulnerability Assessment
+    - Deploy
+    runs-on: ubuntu 18.04
+    env:
+      TASK: sonar
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+#     # cache transformations are currently not supported
+    - run: curl -sL https://ibm.biz/idt-installer | bash
+    - run: curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+    - run: some-cloud plugin update container-service
+    - run: npm ci --ignore-scripts
+    - run: "./bin/sonar.sh"
+    - run: "./bin/some-cloud.login.sh"
+    - run: |
+        docker run \
+          -e SONAR_TOKEN=${SONAR_TOKEN} \
+          -e SONAR_NOTIFY_HOOK=${SONAR_NOTIFY_HOOK} \
+          -e PROJECT_TOKEN=cs360 \
+          us.icr.io/sonar-slack-reporter/sonar-slack-reporter:latest
+#     # notifications transformations are currently not supported
+    services:
+#       # 'services' transformations are currently unsupported
+#       - docker
+    continue-on-error:
+#       # 'continue-on-error' transformations are currently unsupported
+#       allow_failures:
+#       - env: TASK=CR_cleanup
