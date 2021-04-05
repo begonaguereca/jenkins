@@ -11,5 +11,5 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - run: echo "boo"
-      if: ${{ github.event_name == pull request }}
+    - run: echo github.event.pull_request
+      if: ${{ github.event.pull_request == true }}
