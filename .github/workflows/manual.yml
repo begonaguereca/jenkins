@@ -12,4 +12,4 @@ jobs:
     - name: checkout
       uses: actions/checkout@v2
     - run: echo "boo"
-      if: ${{ !github.event_name == pull_request }}
+      if: ${{ github.event_name == pull request }}
