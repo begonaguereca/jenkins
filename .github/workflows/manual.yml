@@ -12,3 +12,4 @@ jobs:
     - name: checkout
       uses: actions/checkout@v2
     - run: echo "boo"
+      if: github.event.pull_request == false
