@@ -11,5 +11,5 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - run: echo github.event.pull_request
+    - run: echo github.event_name
 
