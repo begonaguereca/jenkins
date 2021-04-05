@@ -1,33 +1,14 @@
 name: jenkout-testing/12
 on:
   push:
-    branches:
-    - master
-    - deploy_qa
-    - deploy_prod
-    - deploy_de
-    - deploy_jp
-    - deploy_uk
-    - "/^cpd\\_.*/"
+
 env:
   CF_APP: reponame
-  DAP_HMR: 'false'
-  TRAVIS_ENDPOINT: https://example.com/api
-  cloudant__databaseNameSuffix: travis-$TRAVIS_BUILD_NUMBER
-  CLOUDANT_USERNAME_DEV: xxxxusername
-  CF_USERNAME: reponame@example.com
-  rabbitmq__enabled: 'true'
-  appscan_app_id: 1111-1111
+
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - uses: rtCamp/action-slack-notify@v2
-      env:
-        SLACK_WEBHOOK: "${{ secrets.SLACK_WEBHOOK }}"
-        SLACK_CHANNEL: xxxxxx:xxxxxxxxx
-        SLACK_MESSAGE: |-
-          %{repository_name}@%{branch} <%{build_url}|#%{build_number}> by %{author} %{result} in %{duration}
-          <%{compare_url}|%{commit}> %{commit_subject}
+    - run: echo "boo"
