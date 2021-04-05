@@ -13,5 +13,5 @@ jobs:
     - name: checkout
       uses: actions/checkout@v2
     - run: echo 'test'
-      if: ${{ !github.event_name == 'pull_request' }} 
+      if: ${{ github.event_name !== 'pull_request' }} 
 
