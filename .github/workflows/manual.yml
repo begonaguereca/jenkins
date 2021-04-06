@@ -15,5 +15,4 @@ jobs:
       uses: actions/checkout@v2
     - run: echo "winning"
       if: ${{ env.env.FOO != '' }}
-    - run: echo ${{ env.env.FOO }}
 
