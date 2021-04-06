@@ -13,5 +13,5 @@ jobs:
     - name: checkout
       uses: actions/checkout@v2
     - run: echo 'test'
-      if: ${{ contains("fromJson('[test, main, master]')"), github.ref) }}"
+      if: ${{ join(fromJson('["foo", "-", "bar"]')) == 'foo-bar' }}
 
