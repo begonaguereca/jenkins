@@ -12,5 +12,6 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - run: ech${{ join(fromJson('["foo", "-", "bar"]')) == 'foo-bar' }}
+    - run: echo "winning"
+      if: ${{ join(fromJson('["foo", "-", "bar"]')) == 'foo-bar' }}
 
