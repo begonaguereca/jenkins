@@ -14,4 +14,4 @@ jobs:
     - name: checkout
       uses: actions/checkout@v2
     - run: echo "winning"
-      if: ${{ true }}
+      if: ${{ env.FOO }}
