@@ -4,8 +4,8 @@ on:
   pull_request:
 
 env:
-  FOO: pew
-  VAR: PEWWW
+  FOO: FOO_CHILD
+  FOO_CHILD: real_property
 
 jobs:
   test:
@@ -13,7 +13,6 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - run: echo ${{ join(fromJson([ env.foo, env.var ]), '') }}
     - run: echo "winning"
-      if: ${{ join(fromJson('["foo", "-", "bar"]'), '') == 'foo-bar' }}
+      if: ${{ env.env.FOO }}
 
