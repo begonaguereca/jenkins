@@ -4,7 +4,8 @@ on:
   pull_request:
 
 env:
-  CF_APP: reponame
+  FOO: pew
+  VAR: PEWWW
 
 jobs:
   test:
