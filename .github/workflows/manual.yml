@@ -12,7 +12,7 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - run: echo ${{ join(fromJson('["foo" "-" "bar"]')) }}
+    - run: echo ${{ join(fromJson('["foo", "-", "bar"]'), '') }}
     - run: echo "winning"
-      if: ${{ join(fromJson('["foo", "-", "bar"]')) == 'foo-bar' }}
+      if: ${{ join(fromJson('["foo", "-", "bar"]'), '') == 'foo-bar' }}
 
