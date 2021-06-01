@@ -13,4 +13,6 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - run: echo "${TIMESTAMP}"
+    - run: echo ${{ steps.date.outputs.date }}
+    - run: echo "${{ steps.date.outputs.date }}"
+    - run: echo ${TIMESTAMP}
