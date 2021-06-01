@@ -13,5 +13,4 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - run: echo "winning"
-      if: ${{ env.FOO }}
+    - run: echo "${TIMESTAMP}"
