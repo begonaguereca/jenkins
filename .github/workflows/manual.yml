@@ -14,5 +14,5 @@ jobs:
     - name: checkout
       uses: actions/checkout@v2
     - run: echo "$(date +'%Y-%m-%d')"
-    - run: echo $(date +'%Y-%m-%d')
+    - run: echo $(date +'%Y-%m-%dT%H:%M:%S')
     - run: echo ${TIMESTAMP}
