@@ -1,19 +1,10 @@
-name: jenkout-testing/12
-on:
-  push:
-  pull_request:
-
-env:
-  FOO: FOO_CHILD
-  FOO_CHILD: real_property
-
+name: GitHub Actions Demo
+on: [push]
+concurrency: 
+  group: ${{ github.head_ref }}
+  cancel-in-progress: true
 jobs:
-  test:
+  Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:
-    - name: checkout
-      uses: actions/checkout@v2
-    - run: echo "$(date +'%Y-%m-%d')"
-    - run: echo $(date +'%Y-%m-%dT%H:%M:%S')
-    - run: echo ${TIMESTAMP}
-    - run: echo ${{ steps.date.outputs.date }}
+      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
