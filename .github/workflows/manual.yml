@@ -4,5 +4,5 @@ jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:
-      - run: echo ${{ github.event.repository.name }}
-      - run: echo ${{ github.repository }}
+      - run: echo "${{ github.event.repository.name }} =" ${{ github.event.repository.name }}
+      - run: echo "${{ github.repository }} =" ${{ github.repository }}
