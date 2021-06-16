@@ -6,3 +6,4 @@ jobs:
     steps:
       - run: echo "github.event.repository.name =" ${{ github.event.repository.name }}
       - run: echo "github.repository =" ${{ github.repository }}
+      - run: echo "github.repository =" ${{ github.repository.name }}
