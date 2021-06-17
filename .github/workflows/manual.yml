@@ -24,10 +24,7 @@ jobs:
       env:
         HEROKU_API_KEY: "${{ secrets.HEROKU_API_KEY }}"
         HEROKU_EMAIL: "${{ secrets.HEROKU_EMAIL }}"
-      if: "${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}"
     - run: heroku git:remote --app ${{ github.event.repository.name }}
-      if: "${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}"
     - run: git push heroku main
-      if: "${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}"
     - run: heroku echo 'hello'
       if: "${{ success() }}"
