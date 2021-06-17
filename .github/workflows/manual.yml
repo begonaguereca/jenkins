@@ -12,6 +12,8 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
+    - run: bundle install --jobs=3 --retry=3
+    - run: rake
     - run: |-
         cat > ~/.netrc <<EOF
                           machine api.heroku.com
@@ -30,4 +32,4 @@ jobs:
     - run: git push heroku main
       if: "${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}"
     - run: heroku echo 'hello'
-      if: success()
+      if: "${{ success() }}"
