@@ -1,8 +1,35 @@
-name: GitHub Actions Demo
-on: [push]
+name: valet-dev-testing/travis-heroku
+on:
+  push:
+    branches:
+    - "**/*"
+  pull_request:
+#   # This item has no matching transformer
+#   config_validation: true
 jobs:
-  Explore-GitHub-Actions:
+  test:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "github.event.repository.name =" ${{ github.event.repository.name }}
-      - run: echo "github.repository =" ${{ github.repository }}
+    - name: checkout
+      uses: actions/checkout@v2
+    - run: bundle install --jobs=3 --retry=3
+    - run: rake
+    - run: |-
+        cat > ~/.netrc <<EOF
+                          machine api.heroku.com
+                            login $HEROKU_EMAIL
+                            password $HEROKU_API_KEY
+                          machine git.heroku.com
+                            login $HEROKU_EMAIL
+                            password $HEROKU_API_KEY
+                        EOF
+      env:
+        HEROKU_API_KEY: "${{ secrets.HEROKU_API_KEY }}"
+        HEROKU_EMAIL: "${{ secrets.HEROKU_EMAIL }}"
+      if: "${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}"
+    - run: heroku git:remote --app ${{ github.event.repository.name }}
+      if: "${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}"
+    - run: git push heroku main
+      if: "${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}"
+    - run: heroku echo 'hello'
+      if: success()
