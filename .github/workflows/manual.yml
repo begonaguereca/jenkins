@@ -12,5 +12,5 @@ jobs:
     - name: checkout
       uses: actions/checkout@v2
     - name: Install CMake (Windows)
-      run: echo ${{ github.base_ref }}
+      run: echo ${{ github.event_name }}
 
