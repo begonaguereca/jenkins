@@ -10,9 +10,7 @@ jobs:
     - name: Install CMake (Windows)
       run: echo hello
     - name: Install CMake (Windows)
-      if: success() && env.Agent.OS == 'Windows_NT'
       run: echo ${{ env.Agent.OS }}
     - name: Enable test runs if configuration is valid
-      if: success() && env.DoTestSteps == 'true'
       continue-on-error: true
       run: echo ${{ env.DoTestSteps }}
