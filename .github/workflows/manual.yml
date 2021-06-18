@@ -8,9 +8,5 @@ jobs:
     - name: checkout
       uses: actions/checkout@v2
     - name: Install CMake (Windows)
-      run: echo hello
-    - name: Install CMake (Windows)
-      run: echo ${{ env.Agent.OS }}
-    - name: Enable test runs if configuration is valid
-      continue-on-error: true
-      run: echo ${{ env.DoTestSteps }}
+      run: echo ${{ github.head_ref }}
+
