@@ -1,8 +1,6 @@
 name: valet-project/If-Condition-variables-update
 on:
   push:
-    branches:
-    - main
 jobs:
   Job:
     runs-on: ubuntu-latest
