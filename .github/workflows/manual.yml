@@ -1,30 +1,17 @@
-name: valet-dev-testing/travis-heroku
+name: valet-project/If-Condition-variables-update
 on:
   push:
     branches:
-    - "**/*"
-  pull_request:
-#   # This item has no matching transformer
-#   config_validation: true
+    - main
 jobs:
-  test:
+  Job:
     runs-on: ubuntu-latest
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - run: |-
-        cat > ~/.netrc <<EOF
-                          machine api.heroku.com
-                            login $HEROKU_EMAIL
-                            password $HEROKU_API_KEY
-                          machine git.heroku.com
-                            login $HEROKU_EMAIL
-                            password $HEROKU_API_KEY
-                        EOF
-      env:
-        HEROKU_API_KEY: "${{ secrets.HEROKU_API_KEY }}"
-        HEROKU_EMAIL: "${{ secrets.HEROKU_EMAIL }}"
-    - run: heroku git:remote --app ${{ github.event.repository.name }}
-    - run: git push heroku main
-    - run: heroku echo 'hello'
-      if: "${{ success() }}"
+    - name: Install CMake (Windows)
+      if: success() && env.Agent.OS == 'Windows_NT'
+      run: python tools/install_cmake.py --version 3.20.1 --install_path ${{ github.workspace }} --notest
+    - name: Enable test runs if configuration is valid
+      if: success() && env.DoTestSteps == 'true'
+      continue-on-error: true
