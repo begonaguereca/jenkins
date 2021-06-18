@@ -1,6 +1,9 @@
 name: valet-project/If-Condition-variables-update
 on:
   push:
+concurrency: 
+  group: ${{ github.event_name }}
+  cancel-in-progress: true
 jobs:
   Job:
     runs-on: ubuntu-latest
