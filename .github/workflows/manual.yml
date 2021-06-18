@@ -3,7 +3,7 @@ on:
  - push
  - pull_request
 concurrency: 
-  group: ${{ github.base_ref }}
+  group: ${{ github.head_ref }}
   cancel-in-progress: true
 jobs:
   Job:
