@@ -1,5 +1,7 @@
 name: valet-project/If-Condition-variables-update
-on: [push, pull_request]
+on:
+ - push
+ - pull_request
 concurrency: 
   group: ${{ github.base_ref }}
   cancel-in-progress: true
