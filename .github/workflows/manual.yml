@@ -2,7 +2,7 @@ name: valet-project/If-Condition-variables-update
 on:
   push:
 concurrency: 
-  group: ${{ github.event_name }}
+  group: ${{ github.base_ref }}
   cancel-in-progress: true
 jobs:
   Job:
