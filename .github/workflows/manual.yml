@@ -1,16 +1,18 @@
-name: valet-project/If-Condition-variables-update
+name: valet-dev-testing/postgres
 on:
- - push
- - pull_request
-concurrency: 
-  group: ${{ github.event_name }}
-  cancel-in-progress: true
+  push:
+    branches:
+    - "**/*"
+  pull_request:
 jobs:
-  Job:
+  test:
     runs-on: ubuntu-latest
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - name: Install CMake (Windows)
-      run: echo ${{ github.event_name }}
-
+    - run: apt-get -y install postgresql-11 postgresql-client-11
+    - run: bundle install --jobs=3 --retry=3
+    - run: rake
+    services:
+      postgresql:
+        image: postgres:11
