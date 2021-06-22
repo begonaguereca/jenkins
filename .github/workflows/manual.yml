@@ -1,4 +1,4 @@
-name: valet-dev-testing/postgres
+name: valet-dev-testing/travis-sonar
 on:
   push:
     branches:
@@ -10,9 +10,9 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - run: apt-get -y install postgresql-11 postgresql-client-11
-    - run: bundle install --jobs=3 --retry=3
+    - name: sonar scan
+      uses: sonarsource/sonarcloud-github-action@v1.4
+      env:
+        SONAR_TOKEN: "${{ secrets.SONAR_STRING_TOKEN }}"
+        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
     - run: rake
-    services:
-      postgresql:
-        image: postgres:11
