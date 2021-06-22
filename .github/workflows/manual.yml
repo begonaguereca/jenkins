@@ -1,4 +1,4 @@
-name: valet-dev-testing/travis-sonar
+name: valet-dev-testing/travis-github-pages
 on:
   push:
     branches:
@@ -10,9 +10,14 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - name: sonar scan
-      uses: sonarsource/sonarcloud-github-action@v1.4
-      env:
-        SONAR_TOKEN: "${{ secrets.SONAR_STRING_TOKEN }}"
-        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+    - run: bundle install --jobs=3 --retry=3
     - run: rake
+    - uses: JamesIves/github-pages-deploy-action@4.1.4
+      with:
+        branch: main
+        folder: "./path"
+        token: "${{ secrets.GITHUB_TOKEN }}"
+        commit_message: Deploying a GitHub page
+        git_config_name: savy_dev
+        git_config_email: savy_dev@github.com
+      if: "${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}"
