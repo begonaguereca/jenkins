@@ -10,11 +10,15 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
+    - run: bundle install --jobs=3 --retry=3
+    - run: rake
     - uses: JamesIves/github-pages-deploy-action@4.1.4
       with:
         branch: main
         folder: "./path"
+        repository_name: Valet
         token: "${{ secrets.GITHUB_TOKEN }}"
         commit_message: Deploying a GitHub page
-        git_config_name: savy_dev
+        git_config_name: "${{ github.event.repository.name }}"
         git_config_email: savy_dev@github.com
+    - run: echo 'deploying the second version'
