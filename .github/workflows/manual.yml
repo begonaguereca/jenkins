@@ -10,13 +10,8 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - uses: JamesIves/github-pages-deploy-action@4.1.4
+    - name: Cucumber
+      uses: deblockt/cucumber-report-annotations-action@v1.7
       with:
-        branch: main
-        folder: "."
-        repository-name: Valet
-        token: "${{ secrets.GITHUB_TOKEN }}"
-        commit-message: Deploying a GitHub page
-        git-config-name: "${{ github.event.repository.name }}"
-        git-config-email: savy_dev@github.com
-    - run: echo 'deploying the second version'
+        access_token: "${{ secrets.GITHUB_TOKEN }}"
+        path: "**/cucumber-report.json"
