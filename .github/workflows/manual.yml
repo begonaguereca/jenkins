@@ -14,9 +14,9 @@ jobs:
       with:
         branch: main
         folder: "./path"
-        repository_name: Valet
+        repository-name: Valet
         token: "${{ secrets.GITHUB_TOKEN }}"
-        commit_message: Deploying a GitHub page
-        git_config_name: "${{ github.event.repository.name }}"
-        git_config_email: savy_dev@github.com
+        commit-message: Deploying a GitHub page
+        git-config-name: "${{ github.event.repository.name }}"
+        git-config-email: savy_dev@github.com
     - run: echo 'deploying the second version'
