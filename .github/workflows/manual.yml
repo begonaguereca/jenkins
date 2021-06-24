@@ -10,8 +10,11 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - name: Artifacts Deploy
-      uses: actions/upload-artifact@v2
-      with:
-        path: "${{ github.workspace }}"
+    - name: run command
+      shell: bash
+      run: |-
+        mvn cargo:undeploy
+        mvn clean
+        mvn install
+        mvn cargo:deploy
       if: always()
