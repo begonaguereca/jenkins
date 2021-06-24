@@ -11,7 +11,7 @@ jobs:
     - name: Install SSH key of target
       uses: shimataro/ssh-key-action@v2
       with:
-        key: ${{ secrets.SSH_KEY_OF_TARGET }}
+        key: "123"
         name: id_rsa-target
         known_hosts: "sdfgsdfg"
     - run: ssh-keyscan -H git.example.com >> ~/.ssh/known_hosts
