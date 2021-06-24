@@ -5,13 +5,9 @@ on:
     - "**/*"
   pull_request:
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
     steps:
-    - name: checkout
-      uses: actions/checkout@v2
-    - uses: desiderati/github-action-pushover@v1
-      with:
-        job-status: ${{ job.status }}
-        pushover-api-token: api_key_1
-        pushover_user_key: ${{ secrets.PUSHOVER_USER_KEY }}
+    - run: ssh-keyscan -H git.example.com >> ~/.ssh/known_hosts
+    - run: ssh-keyscan -H 111.22.33.44 >> ~/.ssh/known_hosts
+    - uses: actions/checkout@v1
