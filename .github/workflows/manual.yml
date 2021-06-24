@@ -10,11 +10,8 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - name: run command
-      shell: bash
-      run: |-
-        mvn cargo:undeploy
-        mvn clean
-        mvn install
-        mvn cargo:deploy
-      if: always()
+    - uses: desiderati/github-action-pushover@v1
+      with:
+        job-status: ${{ job.status }}
+        pushover-api-token: api_key_1
+        pushover_user_key: ${{ secrets.PUSHOVER_USER_KEY }}
