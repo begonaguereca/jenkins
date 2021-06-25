@@ -7,10 +7,13 @@ on:
 jobs:
   build:
     container:
-      image: "circleci/node:9.6.1"
+      image: circleci/ruby:2.5.1-node-browsers
       credentials:
         username: mydockerhub-user
-        password: $DOCKERHUB_PASSWORD
+        password: "$DOCKERHUB_PASSWORD"
+      env:
+        FOO: BAR
+      options: "--entrypoint entrypoint.sh --name my_docker_name --user my_username --smallfiles"
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
