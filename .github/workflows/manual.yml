@@ -6,14 +6,12 @@ on:
   pull_request:
 jobs:
   build:
+    container:
+      image: "circleci/node:9.6.1"
+      credentials:
+        username: mydockerhub-user
+        password: $DOCKERHUB_PASSWORD
     runs-on: ubuntu-latest
     steps:
-    - name: Install SSH key of target
-      uses: shimataro/ssh-key-action@v2
-      with:
-        key: "123"
-        name: id_rsa-target
-        known_hosts: "sdfgsdfg"
-    - run: ssh-keyscan -H git.example.com >> ~/.ssh/known_hosts
-    - run: ssh-keyscan -H 111.22.33.44 >> ~/.ssh/known_hosts
     - uses: actions/checkout@v1
+    
