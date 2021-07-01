@@ -1,6 +1,13 @@
 name: xcode
 on:
-  push
+  workflow_dispatch:
+    inputs:
+      example-parameter:
+        required: false
+        default: latest
+      example-parameter-two:
+        required: false
+        default: "~/main"
 jobs:
   build:
     runs-on:
