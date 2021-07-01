@@ -1,5 +1,6 @@
 name: xcode
 on:
+  push:
   workflow_dispatch:
     inputs:
       example-parameter:
