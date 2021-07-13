@@ -5,8 +5,8 @@ jobs:
   build:
     runs-on: windows-latest
     services:
-      cassandra:
-        image: cassandra
+      couchdb:
+        image: couchdb
     steps:
     - name: checkout
       uses: actions/checkout@v2
