@@ -3,7 +3,7 @@ on:
   push:
 jobs:
   build:
-    runs-on: ubuntu
+    runs-on: ubuntu-latest
     services:
       cassandra:
         image: cassandra
