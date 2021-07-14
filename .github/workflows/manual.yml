@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     services:
       elasticsearch:
-        image: elasticsearch
+        image: elasticsearch:6.5.0
     steps:
     - name: checkout
       uses: actions/checkout@v2
