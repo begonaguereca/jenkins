@@ -5,8 +5,8 @@ jobs:
   build:
     runs-on: windows-latest
     services:
-      couchdb:
-        image: couchdb
+      elasticsearch:
+        image: elasticsearch
     steps:
     - name: checkout
       uses: actions/checkout@v2
