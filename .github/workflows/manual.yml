@@ -5,8 +5,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     services:
-      rabbitmq:
-        image: rabbitmq
+      redis:
+        image: redis
         options: |-
           --health-cmd 'redis-cli ping'
           --health-interval 10s
