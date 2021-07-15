@@ -3,10 +3,10 @@ on:
   push:
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     services:
-      mysql:
-        image: mysql
+      neo4j:
+        image: neo4j
     steps:
     - name: checkout
       uses: actions/checkout@v2
