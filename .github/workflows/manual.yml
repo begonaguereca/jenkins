@@ -5,8 +5,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     services:
-      neo4j:
-        image: neo4j
+      rabbitmq:
+        image: rabbitmq
     steps:
     - name: checkout
       uses: actions/checkout@v2
