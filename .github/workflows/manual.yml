@@ -5,8 +5,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     services:
-      memcached:
-        image: memcached
+      mongodb:
+        image: mongodb
     steps:
     - name: checkout
       uses: actions/checkout@v2
