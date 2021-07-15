@@ -10,6 +10,7 @@ jobs:
         image: redis
         options: >-
           --health-cmd "redis-cli ping"
+          --health-interval 10s
     steps:
     - name: checkout
       uses: actions/checkout@v2
