@@ -1,4 +1,4 @@
-name: xcode
+name: health cheaks
 on:
   push:
 jobs:
