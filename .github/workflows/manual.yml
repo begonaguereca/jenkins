@@ -12,13 +12,19 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - name: Get yarn cache directory path
-      id: yarn-cache-dir-path
-      run: echo '::set-output name=dir::$(yarn cache dir)'
-    - name: Set up yarn cache
-      uses: actions/cache@v2
+    - uses: aws-actions/configure-aws-credentials@v1
       with:
-        path: "${{ steps.yarn-cache-dir-path.outputs.dir }}"
-        key: "${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}"
-        restore_keys: "${{ runner.os }}-yarn-"
+        aws_access_key_id: \"${{ secrets.AWS_ACCESS_KEY_ID }}\"
+        aws_secret_access_key: \"${{ secrets.AWS_SECRET_ACCESS_KEY }}\"
+        aws_region: \"${{ github.event.inputs.region}}"
+
+    - uses: aws-actions/aws-cloudformation-github-deploy@v1
+      with:
+        name: "<stack_name_prefix>-<stack_name>"
+        template: "<template>"
+        no_execute_changeset: '1'
+        role_arn: "<role_arn>"
+        capabilities: "<capabilities>"
+        timeout_in_minutes: "<create_timeout>"
+        parameter_overrides: "<parameters>"
 
