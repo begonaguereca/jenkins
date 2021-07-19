@@ -10,11 +10,9 @@ jobs:
         image: redis
         options: --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
     steps:
-    - name: checkout
-      uses: actions/checkout@v2
-    - uses: distributhor/workflow-webhook@v1
-      env:
-        webhook_url: www.example.com
-        webhook_secret: "${{ secrets.WEBHOOK_SECRET }}"
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+          fetch_depth: 1
 
 
