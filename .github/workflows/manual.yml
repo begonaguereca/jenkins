@@ -17,6 +17,6 @@ jobs:
         aws_access_key_id: "${{ secrets.AWS_ACCESS_KEY_ID }}"
         aws_secret_access_key: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
       if: true
-    - id: upload artifacts to s3 bucket
+    - name: upload artifacts to s3 bucket
       run: aws s3 cp my/path s3://bucket/ --recursive
       if: true
