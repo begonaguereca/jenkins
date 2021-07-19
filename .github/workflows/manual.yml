@@ -12,13 +12,9 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - uses: browserstack/github-actions/setup-env@master
+    - name: Set up ccache cache
+      uses: actions/cache@v2
       with:
-        username: "${{ secrets.BROWSERSTACK_USERNAME }}"
-        access_key: "${{ secrets.BROWSERSTACK_ACCESS_KEY }}"
-    - uses: browserstack/github-actions/setup-local@master
-      with:
-        local_testing: start
-    - uses: browserstack/github-actions/setup-local@master
-      with:
-        local_testing: stop
+        path: ".ccache"
+        key: "${ { runner.os } }-ccache-${ { steps.ccache_cache_timestamp.outputs.timestamp } }"
+        restore_keys: "${ { runner.os } }-ccache-"
