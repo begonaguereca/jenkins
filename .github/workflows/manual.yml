@@ -12,18 +12,10 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - uses: softprops/action-gh-release@v1
-      env:
-        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-        GITHUB_REPOSITORY: "${{ github.repository }}"
+    - uses: desiderati/github-action-pushover@v1
       with:
-        files: |-
-          file-1
-          file-2
-        prerelease: true
-        body: This is the body
-        draft: true
-        tag_name: v2
-        name: Version dos
+        job_status: ${{ job.status }}
+        pushover_api_token: api_key_1
+        pushover_user_key: ${{ secrets.PUSHOVER_USER_KEY }}
 
 
