@@ -12,11 +12,13 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - uses: aws-actions/configure-aws-credentials@v1
+    - uses: browserstack/github-actions/setup-env@master
       with:
-        aws_access_key_id: "${{ secrets.AWS_ACCESS_KEY_ID }}"
-        aws_secret_access_key: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
-      if: true
-    - name: upload artifacts to s3 bucket
-      run: aws s3 cp my/path s3://bucket/ --recursive
-      if: true
+        username: "${{ secrets.BROWSERSTACK_USERNAME }}"
+        access_key: "${{ secrets.BROWSERSTACK_ACCESS_KEY }}"
+    - uses: browserstack/github-actions/setup-local@master
+      with:
+        local_testing: start
+    - uses: browserstack/github-actions/setup-local@master
+      with:
+        local_testing: stop
