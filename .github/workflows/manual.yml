@@ -12,13 +12,6 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
-    - name: prepare ccache
-      id: ccache_cache_timestamp
-      shell: cmake -P {0}
-      run: "\n  string(TIMESTAMP TODAY)\n  message('::set-output name=timestamp::${current_date}')"
-    - name: Set up ccache cache
-      uses: actions/cache@v2
-      with:
-        path: ".ccache"
-        key: "${ { runner.os } }-ccache-${ { steps.ccache_cache_timestamp.outputs.timestamp } }"
-        restore_keys: "${ { runner.os } }-ccache-"
+    - uses: cachix/install-nix-action@v13
+      with: 
+        install_url: https://nixos.org/releases/nix/nix-2.3.6/install
