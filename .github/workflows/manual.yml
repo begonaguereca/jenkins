@@ -2,17 +2,33 @@ name: health cheaks
 on:
   push:
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
-    container: node:10.18-jessie
-    services:
-      redis:
-        image: redis
-        options: --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
     steps:
-      - uses: actions/checkout@v2
-        with:
-          submodules: true
-          fetch_depth: 1
+    - name: checkout
+      uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: "${{ matrix.rvm }}"
+#     # 'sudo' was not transformed because there is no suitable equivalent in GitHub Actions
+    - run: bundle install --jobs=3 --retry=3
+    - run: echo "hello!"
+    strategy:
+      matrix:
+        rvm:
+        - 1.9.3
+        - 2.0.0
+        - 2.1.0
+  test_2:
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 1.9.3
+#     # 'sudo' was not transformed because there is no suitable equivalent in GitHub Actions
+    - run: bundle install --jobs=3 --retry=3
+    - run: echo "child"
 
 
