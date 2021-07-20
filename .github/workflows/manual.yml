@@ -17,9 +17,7 @@ jobs:
     strategy:
       matrix:
         rvm:
-        - 1.9.3
-        - 2.0.0
-        - 2.1.0
+        - 2.1.9
   test_2:
     runs-on: ubuntu-latest
     steps:
