@@ -3,31 +3,47 @@ on:
   push:
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
-    - name: install-sonarscanner
+    - name: checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - name: Cache SonarCloud packages
+      uses: actions/cache@v1
+      with:
+        path: "~/.sonar/cache"
+        key: "${{ runner.os }}-sonar"
+        restore-keys: "${{ runner.os }}-sonar"
+    - name: Cache SonarCloud scanner
+      id: cache-sonar-scanner
+      uses: actions/cache@v1
+      with:
+        path: "./.sonar/scanner"
+        key: "${{ runner.os }}-sonar-scanner"
+        restore-keys: "${{ runner.os }}-sonar-scanner"
+    - name: Install SonarCloud scanner
+      if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
       shell: pwsh
       run: |-
         New-Item -Path ./.sonar/scanner -ItemType Directory
-        dotnet tool update dotnet-sonarscanner --tool-path ./.sonar/scanner --version 4.10.0
-    - name: start-sonar-msbuild-analysis
+        dotnet tool update dotnet-sonarscanner --tool-path ./.sonar/scanner
+    - name: Begin SonarCloud Scan
       shell: pwsh
       env:
-        SONAR_TOKEN: "${{ secrets.SONAR_TOKEN }}"
+        SONAR_TOKEN: "${{ secrets.SONAR_SONARQUBE_DEV_TEST_COM_TOKEN }}"
         GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
       run: |-
-        ./.sonar/scanner/dotnet-sonarscanner begin /k:'event calendar-conference-service'
-        /n:sonar.projectName='Event Calendar Conference Service   STAGING'
+        #WARNING: projectKey is a required field, and one has not been provided
+        /n:sonar.projectName='Important Service   STAGING'
         /v:sonar.projectVersion='2.15'
-        /d:sonar.login=${{ secrets.SONAR_TOKEN }}
+        /d:sonar.login=${{ env.SONAR_TOKEN }}
         /d:sonar.verbose="true"
         /d:sonar.cs.opencover.reportsPaths='"/path/to/coverage.xml","/path/to/coverage.2.xml"'
         /d:sonar.coverage.exclusions='"**/*.cs","**/*.md"'
-    - name: end-sonar-msbuild-analysis
+    - name: End SonarCloud Scan
       shell: pwsh
       env:
-        SONAR_TOKEN: "${{ secrets.SONAR_TOKEN }}"
-        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-      run: "./.sonar/scanner/dotnet-sonarscanner end /d:sonar.login='${{ secrets.SONAR_TOKEN }}'"
-
+        SONAR_TOKEN: "${{ secrets.SONAR_SONARQUBE_DEV_TEST_COM_TOKEN }}"
+      run: "./.sonar/scanner/dotnet-sonarscanner end /d:sonar.login=${{ env.SONAR_TOKEN }}"
 
