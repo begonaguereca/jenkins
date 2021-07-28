@@ -2,16 +2,32 @@ name: health cheaks
 on:
   push:
 jobs:
-  test_2:
+  build:
     runs-on: ubuntu-latest
     steps:
-    - name: checkout
-      uses: actions/checkout@v2
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.5.0
-    - run: gem install bundler
-    - run: bundle install --jobs=3 --retry=3
-    - run: echo "child"
+    - name: install-sonarscanner
+      shell: pwsh
+      run: |-
+        New-Item -Path ./.sonar/scanner -ItemType Directory
+        dotnet tool update dotnet-sonarscanner --tool-path ./.sonar/scanner --version 4.10.0
+    - name: start-sonar-msbuild-analysis
+      shell: pwsh
+      env:
+        SONAR_TOKEN: "${{ secrets.SONAR_TOKEN }}"
+        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+      run: |-
+        ./.sonar/scanner/dotnet-sonarscanner begin /k:'event calendar-conference-service'
+        /n:sonar.projectName='Event Calendar Conference Service   STAGING'
+        /v:sonar.projectVersion='2.15'
+        /d:sonar.login=${{ secrets.SONAR_TOKEN }}
+        /d:sonar.verbose="true"
+        /d:sonar.cs.opencover.reportsPaths='"/path/to/coverage.xml","/path/to/coverage.2.xml"'
+        /d:sonar.coverage.exclusions='"**/*.cs","**/*.md"'
+    - name: end-sonar-msbuild-analysis
+      shell: pwsh
+      env:
+        SONAR_TOKEN: "${{ secrets.SONAR_TOKEN }}"
+        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+      run: "./.sonar/scanner/dotnet-sonarscanner end /d:sonar.login='${{ secrets.SONAR_TOKEN }}'"
 
 
