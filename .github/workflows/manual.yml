@@ -5,43 +5,19 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
-    - name: checkout
-      uses: actions/checkout@v2
+    - name: download artifact
+      uses: dawidd6/action-download-artifact@v2
       with:
-        fetch-depth: 0
-    - name: Cache SonarCloud packages
-      uses: actions/cache@v1
-      with:
-        path: "~/.sonar/cache"
-        key: "${{ runner.os }}-sonar"
-        restore-keys: "${{ runner.os }}-sonar"
-    - name: Cache SonarCloud scanner
-      id: cache-sonar-scanner
-      uses: actions/cache@v1
-      with:
-        path: "./.sonar/scanner"
-        key: "${{ runner.os }}-sonar-scanner"
-        restore-keys: "${{ runner.os }}-sonar-scanner"
-    - name: Install SonarCloud scanner
-      if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
-      shell: pwsh
-      run: |-
-        New-Item -Path ./.sonar/scanner -ItemType Directory
-        dotnet tool update dotnet-sonarscanner --tool-path ./.sonar/scanner
-    - name: Begin SonarCloud Scan
-      shell: pwsh
+        github_token: "${{ secrets.GITHUB_TOKEN }}"
+        workflow: "${{ env.WORKFLOW_NAME }}"
+        workflow_conclusion: "${{ env.CONCLUSION }}"
+        name: "${{ env.ARTIFACT_NAME }}"
+        path: "${{ env.TARGET_PATH }}"
+        repo: "${{ env.REPO }}"
       env:
-        SONAR_TOKEN: "${{ secrets.SONAR_SONARQUBE_DEV_TEST_COM_TOKEN }}"
-        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-      run: |-
-        .\.sonar\scanner\dotnet-sonarscanner begin /k:"test_key"
-        /d:sonar.login=${{ env.SONAR_TOKEN }}
-        /d:sonar.verbose="true"
-        /d:sonar.cs.opencover.reportsPaths='"/path/to/coverage.xml","/path/to/coverage.2.xml"'
-        /d:sonar.coverage.exclusions='"**/*.cs","**/*.md"'
-    - name: End SonarCloud Scan
-      shell: pwsh
-      env:
-        SONAR_TOKEN: "${{ secrets.SONAR_SONARQUBE_DEV_TEST_COM_TOKEN }}"
-      run: "./.sonar/scanner/dotnet-sonarscanner end /d:sonar.login=${{ env.SONAR_TOKEN }}"
-
+        WORKFLOW_NAME: UPDATE_ME
+        CONCLUSION: completed,success
+        TARGET_PATH: moved
+        ARTIFACT_NAME: UPDATE_ME
+        REPO: "${{github.repository}}"
+      continue-on-error: false
