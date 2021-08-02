@@ -21,8 +21,7 @@ jobs:
         SONAR_TOKEN: "${{ secrets.SONAR_SONARQUBE_DEV_TEST_COM_TOKEN }}"
         GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
       run: |-
-        .\.sonar\scanner\dotnet-sonarscanner begin /k:"test_key"
-        /n:"jenkins"
+        .\.sonar\scanner\dotnet-sonarscanner begin /k:"test_key" /n:"jenkins"
         /v:'2.15'
         /d:sonar.login=${{ env.SONAR_TOKEN }}
         /d:sonar.verbose="true"
