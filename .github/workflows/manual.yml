@@ -22,7 +22,7 @@ jobs:
         GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
       run: |-
         .\.sonar\scanner\dotnet-sonarscanner begin /k:"test_key"
-        /n:'Important Service   STAGING'
+        /n:'Jenkins'
         /v:'2.15'
         /d:sonar.login=${{ env.SONAR_TOKEN }}
         /d:sonar.verbose="true"
