@@ -22,10 +22,10 @@ jobs:
         GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
       run: >-
         .\.sonar\scanner\dotnet-sonarscanner begin /k:"test_key" /n:"jenkins"
-        /v:'2.15'
-        /d:sonar.login=${{ env.SONAR_TOKEN }}
-        /d:sonar.verbose="true"
-        /d:sonar.cs.opencover.reportsPaths='"/path/to/coverage.xml","/path/to/coverage.2.xml"'
+        /v:'2.15'/
+        /d:sonar.login=${{ env.SONAR_TOKEN }}/
+        /d:sonar.verbose="true"/
+        /d:sonar.cs.opencover.reportsPaths='"/path/to/coverage.xml","/path/to/coverage.2.xml"'/
         /d:sonar.coverage.exclusions='"**/*.cs","**/*.md"'
     - name: End SonarCloud Scan
       shell: pwsh
