@@ -15,7 +15,6 @@ jobs:
         SONAR_TOKEN: "${{ secrets.SONAR_TOKEN }}"
       run: |
         sonar-scanner/`
-        #WARNING: projectKey is a required field, ensure it is configured here or in your project file
         /k:'<<INSERT KEY HERE>>'/`
         /d:sonar.organization='begonaguereca'/`
         /d:sonar.host.url='${{ secrets.SONAR_URL }}'/`
