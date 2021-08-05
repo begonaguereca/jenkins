@@ -21,4 +21,4 @@ jobs:
         /k:'<<INSERT KEY HERE>>'/`
         /d:sonar.organization='begonaguereca'/`
         /d:sonar.host.url='${{ secrets.SONAR_URL }}'/`
-        /d:sonar.login=${{ env.SONAR_TOKEN }}/`
+        /d:sonar.login=${{ env.SONAR_TOKEN }}
