@@ -15,7 +15,7 @@ jobs:
         SONAR_TOKEN: "${{ secrets.SONAR_TOKEN }}"
       run: |
         sonar-scanner/`
-        /k:'<<INSERT KEY HERE>>'/`
+        /k:'begonaguereca_jenkins'/`
         /d:sonar.organization='begonaguereca'/`
         /d:sonar.host.url='${{ secrets.SONAR_URL }}'/`
         /d:sonar.login=${{ env.SONAR_TOKEN }}
