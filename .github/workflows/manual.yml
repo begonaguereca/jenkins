@@ -14,13 +14,10 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-    - name: SonarCloud Scan
-      env:
-        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-        SONAR_TOKEN: "${{ secrets.SONAR_TOKEN }}"
-      run: |-
-        sonar-scanner/`
-        /k:'begonaguereca_jenkins'/`
-        /d:sonar.organization='begonaguereca'/`
-        /d:sonar.host.url='${{ secrets.SONAR_URL }}'/`
-        /d:sonar.login=${{ env.SONAR_TOKEN }}
+      with: 
+        args: |-
+          sonar-scanner/`
+          /k:'begonaguereca_jenkins'/`
+          /d:sonar.organization='begonaguereca'/`
+          /d:sonar.host.url='${{ secrets.SONAR_URL }}'/`
+          /d:sonar.login=${{ env.SONAR_TOKEN }}
