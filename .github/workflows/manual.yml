@@ -16,7 +16,7 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       with: 
         args: |-
-          /d:sonar.projectKey='begonaguereca_jenkins'/`
+          -Dsonar.projectKey='begonaguereca_jenkins'/`
           /d:sonar.organization='begonaguereca'/`
           /d:sonar.host.url='${{ secrets.SONAR_URL }}'/`
           /d:sonar.login=${{ env.SONAR_TOKEN }}
