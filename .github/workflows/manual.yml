@@ -18,5 +18,4 @@ jobs:
         args: |-
           -Dsonar.projectKey='begonaguereca_jenkins'/`
           -Dsonar.organization='begonaguereca'/`
-          -Dsonar.host.url='${{ secrets.SONAR_URL }}'/`
           -Dsonar.login=${{ env.SONAR_TOKEN }}
