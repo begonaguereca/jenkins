@@ -2,29 +2,23 @@ name: health cheaks
 on:
   push:
 jobs:
-  build:
-    runs-on: windows-latest
+  test:
+    runs-on: ubuntu-latest
     steps:
     - name: checkout
       uses: actions/checkout@v2
       with:
         fetch-depth: 0
-    - run: npm i @actions/exec
-    - name: Extract Files
-      uses: actions/github-script@v4
+    - run: gem install bundler
+    - run: bundle install --jobs=3 --retry=3
+    - name: SonarCloud Scan
       env:
-        DESTINATION_FOLDER: base_folder
-        ARCHIVE_FILE_PATTERNS: "**/*.zip"
-      with:
-        script: |-
-          const fs = require('fs').promises
-          const path = require('path')
-          const exec = require('@actions/exec')
-          const target = path.resolve(process.env.DESTINATION_FOLDER)
-          const patterns = process.env.ARCHIVE_FILE_PATTERNS
-          const globber = await glob.create(patterns)
-          await io.mkdirP(path.dirname(target))
-          for await (const file of globber.globGenerator()) {
-            if ((await fs.lstat(file)).isDirectory()) continue
-            await exec.exec(`7z x ${file} -o${target} -aoa`)
-          }
+        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        SONAR_TOKEN: "${{ secrets.SONAR_TOKEN }}"
+      run: |
+        sonar-scanner/`
+        #WARNING: projectKey is a required field, ensure it is configured here or in your project file
+        /k:'<<INSERT KEY HERE>>'/`
+        /d:sonar.organization='begonaguereca'/`
+        /d:sonar.host.url='${{ secrets.SONAR_URL }}'/`
+        /d:sonar.login=${{ env.SONAR_TOKEN }}/`
