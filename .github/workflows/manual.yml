@@ -15,8 +15,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       with: 
-        args: |-
-          sonar-scanner/`
+        args: |
           /k:'begonaguereca_jenkins'/`
           /d:sonar.organization='begonaguereca'/`
           /d:sonar.host.url='${{ secrets.SONAR_URL }}'/`
