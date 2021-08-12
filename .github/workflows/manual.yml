@@ -5,6 +5,7 @@ jobs:
   test:
     container:
       image: postgres
+      options: --entrypoint entrypoint.sh postgres -b
     runs-on: ubuntu-latest
     steps:
     - name: checkout
