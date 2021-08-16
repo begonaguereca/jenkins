@@ -10,24 +10,11 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
+
+    - uses: manishsat/ado-download-artifact@v1
       with:
-        fetch-depth: 0
-    - run: npm i @actions/exec
-    - name: Extract Files
-      uses: actions/github-script@v4
-      env:
-        DESTINATION_FOLDER: base_folder
-        ARCHIVE_FILE_PATTERNS: "**/*.zip"
-      with:
-        script: |-
-          const fs = require('fs').promises
-          const path = require('path')
-          const exec = require('@actions/exec')
-          const target = path.resolve(process.env.DESTINATION_FOLDER)
-          const patterns = process.env.ARCHIVE_FILE_PATTERNS
-          const globber = await glob.create(patterns)
-          await io.mkdirP(path.dirname(target))
-          for await (const file of globber.globGenerator()) {
-            if ((await fs.lstat(file)).isDirectory()) continue
-            await exec.exec(`7z x ${file} -o${target} -aoa`)
-          }
+        buildDefinitionId: '63'
+        artifactName: _build-playground
+        projectId: 97d2995f-4fe1-4175-9c24-effd87124bba
+        pattoken: "${{ secrets.AZURE_DEVOPS__BUILD-PLAYGROUND_TOKEN }}"
+        orgName: "${{ secrets.AZURE_DEVOPS__BUILD-PLAYGROUND_ORG_NAME }}"
