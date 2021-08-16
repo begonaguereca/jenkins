@@ -13,5 +13,5 @@ jobs:
         buildDefinitionId: '63'
         artifactName: _build-playground
         projectId: 97d2995f-4fe1-4175-9c24-effd87124bba
-        pattoken: "${{ secrets.AZURE_DEVOPS__BUILD-PLAYGROUND_TOKEN }}"
-        orgName: "${{ secrets.AZURE_DEVOPS__BUILD-PLAYGROUND_ORG_NAME }}"
+        pattoken: "${{ secrets.AZURE_DEVOPS_TOKEN }}"
+        orgName: "${{ secrets.AZURE_DEVOPS_ORG_NAME }}"
