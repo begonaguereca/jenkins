@@ -1,17 +1,10 @@
-name: health cheaks
+name: Node.js 
 on:
-  push:
+  push
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
     steps:
-    - name: checkout
-      uses: actions/checkout@v2
-
-    - uses: manishsat/ado-download-artifact@v1
-      with:
-        buildDefinitionId: '63'
-        artifactName: '_build-playground'
-        projectId: '97d2995f-4fe1-4175-9c24-effd87124bba'
-        pattoken: "${{ secrets.AZURE_DEVOPS_TOKEN }}"
-        orgName: "${{ secrets.AZURE_DEVOPS_ORG_NAME }}"
+      - uses: actions/checkout@v2
+      - run: ${{ github.workflow }}
+      - run: ${{ github.workflow.id }}
