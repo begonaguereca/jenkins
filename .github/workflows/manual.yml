@@ -8,5 +8,6 @@ jobs:
       - uses: actions/checkout@v2
       - run: echo ${{ github.workflow }}
       - run: echo ${{ job.name }}
+      - run: echo ${{ job.id }}
       - run: echo "#{ job.name }"
 
