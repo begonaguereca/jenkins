@@ -3,6 +3,8 @@ on:
   push
 jobs:
   build:
+    if: # "artifact triggers are not supported"
+        failure() && github.event_type == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
