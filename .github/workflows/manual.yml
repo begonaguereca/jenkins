@@ -3,9 +3,10 @@ on:
   push
 jobs:
   build:
+    runs-on: # this agent type is not supported: [trusty]
+      ubuntu-latest
     if: # "artifact triggers are not supported"
         github.event_type != 'pull_request'
-    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - run: echo ${{ github.workflow }}
