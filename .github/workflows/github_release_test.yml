@@ -1,0 +1,179 @@
+name: build-playground/unit-tests/Github_Release_Test
+on:
+#   # The 'artifactSource' resource was not converted because GitHub does not support this type of trigger
+#   # This item has no matching transformer
+#   schedule:
+#     schedule:
+#       jobId: de5f9d5b-1865-4e11-b9ec-1ef8f3df2b33
+#       timeZoneId: UTC
+#       startHours: 3
+#       startMinutes: 0
+#       daysToRelease: 31
+#     triggerType: schedule
+#   # This item has no matching transformer
+#       jobId: 4053cea7-18f9-4708-9acd-73034a404dcd
+#       daysToRelease: 7
+#       jobId: d69cd9cc-f913-475d-9e72-1d4ddb9696c8
+#       daysToRelease: '8'
+#   sourceRepo:
+#     branchFilters:
+#     - "-main"
+#     - main
+#     alias: _azure_repo
+#     triggerType: sourceRepo
+#   # This item has no matching transformer
+#   # The 'package' resource was not transformed because workflows cannot be triggered on specific package in GitHub Actions
+#     alias: _begonaguereca_artifacts
+env:
+  ADMINUSERNAME: Begona
+jobs:
+  Stage-1:
+    runs-on: windows-latest
+    concurrency:
+      group: "${{ github.ref }}"
+      cancel-in-progress: true
+    env:
+      ALT: one1, one2
+      FAVORITE_ICE_CREAM: Mango
+      FAVORITE_MOVIE: Pride and Prejudice
+      TARGETS: suite1,suite2
+    timeout-minutes: 99
+    strategy:
+    steps:
+#     # 'Git' was not transformed because there is no suitable equivalent in GitHub Actions
+#     # 'PackageManagement' was not transformed because there is no suitable equivalent in GitHub Actions
+#     # 'GitHub' was not transformed because there is no suitable equivalent in GitHub Actions
+#     # 'Jenkins' was not transformed because there is no suitable equivalent in GitHub Actions
+#     # This action relies on the workflow 'build-playground.yml' being present in this repository (change the repository parameter if the workflow is in a different repository).
+#     # Ensure the workflow exists and uploads an artifact for this to use.
+#     - uses: dawidd6/action-download-artifact@v2
+#       with:
+#         name: _azure_repo
+#         github_token: "${{ secrets.GITHUB_TOKEN }}"
+#         repo: "${{ github.repository }}"
+#     # 'DockerHub' was not transformed because there is no suitable equivalent in GitHub Actions
+#     # 'GitHubRelease' was not transformed because there is no suitable equivalent in GitHub Actions
+#     # This item has no matching transformer
+#     - environment: {}
+#       taskId: a433f589-fce1-4460-9ee6-44a624aeb1fb
+#       version: 1.*
+#       name: Download Build Artifacts
+#       refName: ''
+#       enabled: true
+#       alwaysRun: false
+#       continueOnError: false
+#       timeoutInMinutes: 0
+#       definitionType: task
+#       overrideInputs: {}
+#       condition: succeeded()
+#       inputs:
+#         buildType: current
+#         project: ''
+#         definition: ''
+#         specificBuildWithTriggering: 'false'
+#         buildVersionToDownload: latest
+#         allowPartiallySucceededBuilds: 'false'
+#         branchName: refs/heads/master
+#         buildId: ''
+#         tags: ''
+#         downloadType: single
+#         artifactName: tesing
+#         itemPattern: "**"
+#         downloadPath: "${{ github.workspace }}"
+#         parallelizationLimit: '8'
+#         checkDownloadedFiles: 'false'
+#         retryDownloadCount: '4'
+#     # This item has no matching transformer
+#     - environment: {}
+#       taskId: 263abc27-4582-4174-8789-af599697778e
+#       version: 0.*
+#       name: Download GitHub Release
+#       refName: ''
+#       enabled: true
+#       alwaysRun: false
+#       continueOnError: false
+#       timeoutInMinutes: 0
+#       definitionType: task
+#       overrideInputs: {}
+#       condition: succeeded()
+#       inputs:
+#         connection: '085215ec-fd70-4f71-b014-08011768838e'
+#         userRepository: slowslipper/build-playground
+#         defaultVersionType: latest
+#         version: ''
+#         itemPattern: "**"
+#         downloadPath: "${{ github.workspace }}"
+    - name: Set up JDK
+      uses: actions/setup-java@v1
+    - name: Ant ${{ env.TARGETS }} build.xml
+      run: ant ${{ env.TARGETS }} -buildfile build.xml
+    - name: Publish test results
+      uses: EnricoMi/publish-unit-test-result-action@v1.7
+      if: always()
+      with:
+        files: "**/TEST-*.xml"
+    - name: dotnet build
+      run: dotnet build unicorn
+  Unicorn-Stage:
+    needs:
+    - Stage-1
+    runs-on: windows-latest
+    concurrency:
+#       # GitHub Actions does not support parallel deployments
+    strategy:
+    steps:
+#     # 'Git' was not transformed because there is no suitable equivalent in GitHub Actions
+#     # 'PackageManagement' was not transformed because there is no suitable equivalent in GitHub Actions
+#     # 'GitHub' was not transformed because there is no suitable equivalent in GitHub Actions
+#     # 'Jenkins' was not transformed because there is no suitable equivalent in GitHub Actions
+#     # This action relies on the workflow 'build-playground.yml' being present in this repository (change the repository parameter if the workflow is in a different repository).
+#     # Ensure the workflow exists and uploads an artifact for this to use.
+#     - uses: dawidd6/action-download-artifact@v2
+#       with:
+#         name: _azure_repo
+#         github_token: "${{ secrets.GITHUB_TOKEN }}"
+#         repo: "${{ github.repository }}"
+#     # 'DockerHub' was not transformed because there is no suitable equivalent in GitHub Actions
+#     # 'GitHubRelease' was not transformed because there is no suitable equivalent in GitHub Actions
+#     # This item has no matching transformer
+#     - environment: {}
+#       taskId: cbc316a2-586f-4def-be79-488a1f503564
+#       version: 0.*
+#       name: 'kubectl '
+#       refName: ''
+#       enabled: true
+#       alwaysRun: false
+#       continueOnError: false
+#       timeoutInMinutes: 0
+#       definitionType:
+#       overrideInputs: {}
+#       condition: succeeded()
+#       inputs:
+#         kubernetesServiceEndpoint: ''
+#         namespace: ''
+#         command: ''
+#         useConfigurationFile: 'false'
+#         configuration: ''
+#         arguments: ''
+#         secretType: dockerRegistry
+#         secretArguments: ''
+#         containerRegistryType: Azure Container Registry
+#         dockerRegistryEndpoint: ''
+#         azureSubscriptionEndpoint: ''
+#         azureContainerRegistry: ''
+#         secretName: ''
+#         forceUpdate: 'true'
+#         configMapName: ''
+#         forceUpdateConfigMap: 'false'
+#         useConfigMapFile: 'false'
+#         configMapFile: ''
+#         configMapArguments: ''
+#         versionOrLocation: version
+#         versionSpec: 1.7.0
+#         checkLatest: 'false'
+#         specifyLocation: ''
+#         cwd: "${{ github.workspace }}"
+#         outputFormat: json
+#         kubectlOutput: ''
+    - name: dotnet build
+      run: dotnet build
