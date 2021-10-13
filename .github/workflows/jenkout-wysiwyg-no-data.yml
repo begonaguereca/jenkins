@@ -1,0 +1,10 @@
+name: jenkout-wysiwyg-no-data
+on:
+  --- {}
+env:
+  --- {}
+jobs:
+  build:
+    runs-on: 
+    steps: []
+    needs: []
