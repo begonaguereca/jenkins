@@ -1,0 +1,9 @@
+name: freestyle-baboon
+on:
+  workflow_dispatch: 
+jobs:
+  build:
+    steps:
+    - name: run batch command
+      run: echo "hello world!"
+      shell: cmd
